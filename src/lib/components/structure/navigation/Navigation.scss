@@ -1,0 +1,30 @@
+.ms-nav {
+  @apply fixed z-20 bottom-0;
+  @apply h-16 w-full;
+  // @apply bg-white;
+  @apply backdrop-blur-xl bg-white/60;
+  @apply rounded-t-xl;
+
+  .ms-nav-item {
+    @apply relative;
+    @apply inline-block;
+    @apply h-16 w-1/4;
+    @apply text-center;
+
+    .ms-nav-item-icon {
+      @apply inline-block mt-2;
+    }
+
+    .ms-nav-item-label {
+      @apply inline-block w-full;
+      @apply absolute bottom-2.5 left-0;
+      @apply font-semibold text-xs text-slate-500;
+    }
+
+    &.ms-nav-item-current {
+      .ms-nav-item-label {
+        @apply text-slate-900;
+      }
+    }
+  }
+}

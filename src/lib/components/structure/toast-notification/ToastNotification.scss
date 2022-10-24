@@ -1,0 +1,15 @@
+.ms-toast-wrap {
+  --toastContainerTop: 1.5rem;
+  --toastContainerRight: 1.5rem;
+  --toastContainerBottom: auto;
+  --toastContainerLeft: 1.5rem;
+  --toastWidth: 100%;
+  --toastMinHeight: 2rem;
+  --toastPadding: 0.5rem;
+  --toastBackground: #fff;
+  --toastColor: #444;
+  --toastBorderRadius: 8px;
+  --toastBarHeight: 4px;
+  --toastBarBackground: var(--primary-color);
+  font-size: 0.875rem;
+}

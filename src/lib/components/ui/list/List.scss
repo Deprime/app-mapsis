@@ -1,0 +1,39 @@
+.ms-list {
+  @apply rounded-md;
+
+  &-item {
+    @apply text-sm text-slate-900 font-semibold;
+    @apply px-3 py-3;
+    @apply transition-all duration-200 ease-in-out;
+    @apply bg-white;
+    @apply border-b border-solid border-b-gray-50;
+    @apply relative;
+
+    &::before {
+      content: "";
+      background-color: #FF5F6D;
+      @apply transition-all;
+      @apply inline-block;
+      @apply absolute top-1/2 left-0 -mt-0.5;
+      @apply w-1.5 h-1.5 rounded-full;
+      @apply opacity-0;
+    }
+
+    &--selected {
+      @apply pl-5;
+
+      &::before {
+        @apply left-1.5;
+        @apply opacity-100;
+      }
+    }
+
+    &:first-child {
+      @apply rounded-t-md pt-3.5;
+    }
+    &:last-child {
+      @apply rounded-b-md pb-3.5;
+      @apply border-none;
+    }
+  }
+}

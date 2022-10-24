@@ -1,0 +1,20 @@
+body {
+  background-color: var(--ms-peach);
+}
+
+.ms-bg-peach {
+  background-color: var(--ms-peach);
+}
+.ms-bg-peach-gradient {
+  background: linear-gradient(93.87deg, #FF5F6D -10.04%, #FFC371 103.84%);
+}
+
+.ms-link, a {
+  @apply text-orange-500 font-medium
+}
+
+
+.ms-h-screen {
+  height: var(--mobile-screen);
+  // min-height: 650px;
+}

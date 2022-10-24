@@ -1,0 +1,16 @@
+.ms-input {
+  @apply bg-white;
+  @apply rounded-xl;
+  @apply px-4 py-1.5;
+  @apply font-medium leading-6;
+  @apply text-sm;
+  @apply border border-white;
+  @apply transition-all;
+  @apply outline-none;
+
+  &:active,
+  &:focus {
+    @apply ring-2 ring-blue-200 focus:ring-blue-300 outline-none;
+    @apply border-blue-400;
+  }
+}

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./variables";
+@import "./typography";
+@import "./animations";
+@import "./theme.scss";
+@import "./pages.scss";

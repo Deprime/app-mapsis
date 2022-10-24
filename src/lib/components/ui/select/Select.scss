@@ -1,0 +1,8 @@
+.ms-select {
+  @apply rounded-xl;
+  @apply px-2 py-2;
+  @apply ring-4 ring-blue-200 focus:ring-blue-300 outline-none;
+  @apply border border-blue-400;
+  @apply font-medium leading-6;
+  min-height: 42px !important;
+}

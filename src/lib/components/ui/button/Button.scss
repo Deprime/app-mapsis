@@ -1,0 +1,73 @@
+.ms-button {
+  @apply inline-block;
+  @apply font-medium text-sm text-center;
+  @apply py-3 px-5;
+  @apply rounded-xl;
+  @apply outline-none;
+  @apply transition-all duration-200 ease-in-out;
+  @apply select-none;
+
+  // Sizing
+  // &-lg {}
+
+  // Block state
+  &-block {
+    @apply block w-full;
+  }
+
+  // Variants
+  &-default {
+    @apply bg-slate-200;
+
+    &:hover {
+      @apply bg-slate-300;
+    }
+    &:active {
+      @apply bg-slate-400;
+    }
+  }
+
+  &-primary {
+    background-color: #FF5F6D;
+    background: linear-gradient(93.87deg, #FF5F6D -10.04%, #FFC371 103.84%);
+    @apply text-white;
+    @apply transition-all;
+
+    &:active {
+      background: linear-gradient(93.87deg, #FFC371 -10.04%, #FF5F6D 103.84%);
+    }
+  }
+
+  &-danger {
+    @apply bg-red-600;
+    @apply text-white;
+
+    &:hover {
+      @apply bg-red-700;
+    }
+    &:active {
+      @apply bg-red-800;
+    }
+  }
+
+  // Disabled
+  &-disabled {
+    @apply opacity-60 cursor-default;
+
+    &.button {
+      &-default {
+        &:hover,
+        &:active {
+          @apply bg-slate-200;
+        }
+      }
+
+      &-primary {
+        &:hover,
+        &:active {
+          @apply bg-cyan-600;
+        }
+      }
+    }
+  }
+}

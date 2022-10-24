@@ -1,0 +1,35 @@
+.chat-item {
+  @apply flex flex-row items-end;
+  @apply mb-4;
+
+  &-avatar {
+    @apply rounded-full;
+    @apply w-8 h-8;
+    @apply mr-2;
+  }
+
+  .chat-msg {
+    @apply text-sm py-1 px-3;
+
+    &-owner {
+      @apply rounded-tl-xl rounded-tr-xl rounded-br-sm rounded-bl-xl;
+      @apply bg-blue-800 text-white
+    }
+
+    &-opposite {
+      @apply rounded-tl-xl rounded-tr-xl rounded-br-xl rounded-bl-sm;
+      @apply bg-white;
+    }
+  }
+
+
+  &:last-child {
+    &.chat-msg-owner {
+      @apply rounded-tr-sm rounded-br-xl;
+    }
+
+    &.chat-msg-opposite {
+      @apply rounded-tl-sm rounded-br-xl;
+    }
+  }
+}

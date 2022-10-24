@@ -1,0 +1,24 @@
+.ms-chips {
+  @apply rounded-lg;
+  @apply m-0.5;
+  @apply inline-block;
+  @apply font-medium;
+
+  &-default {
+    @apply bg-white;
+    @apply text-slate-900;
+  }
+
+  &-primary {
+    @apply bg-sky-700;
+    @apply text-white;
+  }
+
+  &-md {
+    @apply px-4 py-1.5;
+  }
+  &-sm {
+    @apply px-3 py-1;
+    @apply text-sm
+  }
+}

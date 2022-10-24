@@ -1,0 +1,68 @@
+.ms-loader,
+.ms-loader::after,
+.ms-loader::before {
+  position: absolute;
+  left: 0;
+  z-index: 11;
+}
+
+.ms-loader {
+  text-align: center;
+  --loader-size: 40px;
+  --loader-border: 4px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &::after,
+  &::before {
+    content: '';
+    border-radius: 50%;
+    border-style: solid;
+  }
+
+  &::before {
+    border-color: var(--secondary-color);
+  }
+
+  &::after {
+    border-color: var(--primary-color);
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    animation: kc-spin 500ms linear infinite;
+  }
+
+  &-md {
+    width: calc(var(--loader-size) + var(--loader-border)*2);
+    height: calc(var(--loader-size) + var(--loader-border)*2);
+
+    &::after,
+    &::before {
+      width: var(--loader-size);
+      height: var(--loader-size);
+      border-width: var(--loader-border);
+    }
+  }
+
+  &-sm {
+    width: calc(var(--loader-size)*0.6 + var(--loader-border)*1.6);
+    height: calc(var(--loader-size)*0.6 + var(--loader-border)*1.6);
+
+    &::after,
+    &::before {
+      width: calc(var(--loader-size)*0.6);
+      height: calc(var(--loader-size)*0.6);
+      border-width: calc(var(--loader-border)*0.8);
+    }
+  }
+}
+
+.ms-loader-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
