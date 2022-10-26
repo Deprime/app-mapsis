@@ -7,11 +7,18 @@
 
   // Presets
   const events = getEventsAction(current_component);
+
+  // Props
+  export let disabled = false;
+  export let value: number|string = "";
 </script>
 
 <select
-  use:events
+  {disabled}
+  bind:value
+  {...$$restProps}
   class={`ms-select ${$$props.class ? $$props.class : ''}`}
+  use:events
 >
   <slot />
 </select>

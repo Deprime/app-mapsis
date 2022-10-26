@@ -46,7 +46,7 @@
   }
 </script>
 
-<section class={`z-20  w-full bg-orange-50 ${isActive ? 'h-screen z-40 fixed' : 'h-auto relative overflow-x-scroll'}`}>
+<section class={`z-20 w-full bg-orange-50 ${isActive ? 'h-screen z-40 fixed' : 'h-auto relative'}`}>
   {#if isActive}
     <h2 class="font-extrabold text-slate-800 px-4 pt-4 pb-4">
       {$_('pages.filters.title')}
