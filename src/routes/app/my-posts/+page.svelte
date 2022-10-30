@@ -7,6 +7,8 @@
   import { Button } from '$lib/components/ui';
   import { PostCard } from '$lib/components/shared';
 
+  import { postApi } from '$lib/api';
+
   // Data
   let posts: any[] = [];
   let loading = true;
@@ -35,11 +37,18 @@
     goto(`/app/my-posts/${postId}`);
   }
 
-  onMount(() => {
-    const demoData = localStorage.getItem('demoMarkers');
-    posts = JSON.parse(demoData);
-    loading = false;
-  })
+  onMount(async () => {
+    try {
+      const response = await postApi.list();
+      posts = response.data.post_list;
+    }
+    catch(error) {
+      throw new Error(error);
+    }
+    finally {
+      loading = false;
+    }
+  });
 </script>
 
 <svelte:head>
@@ -48,8 +57,8 @@
   </title>
 </svelte:head>
 
-<section class="ms-h-screen overflow-y-scroll pb-16">
-  <header class="py-4 px-6 ">
+<section class="ms-h-screen overflow-y-scroll pb-36">
+  <header class="py-4 px-6">
     <h3 class="font-extrabold text-slate-800">
       {$_('pages.my_posts.title')}
     </h3>
@@ -67,7 +76,7 @@
     </section>
   {/if}
 
-  <div class="sticky bottom-0 z-30 px-4 pb-4">
+  <div class="fixed bottom-16 w-full z-30 px-4 pb-4">
     <Button
       block
       variant="primary"

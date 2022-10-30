@@ -25,7 +25,6 @@
 		ref.blur();
 	}
 
-  // $: cssClassList = getCssClassList(variant, block, disabled, loading, size);
   $: cssClassList = getCssClassList(disabled, loading);
 
   // Methods

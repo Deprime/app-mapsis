@@ -26,6 +26,14 @@ const dictionaryApi = {
     const url = `${PREFIX}/estate-status-list`;
     return $axios.get(url)
   },
+
+  /**
+   * Get category list
+   */
+  getCategoryList: (): Promise<any> => {
+    const url = `${PREFIX}/category-list`;
+    return $axios.get(url)
+  },
 }
 
 export default dictionaryApi;

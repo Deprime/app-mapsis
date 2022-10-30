@@ -3,6 +3,7 @@ import { writable } from 'svelte-local-storage-store';
 const $$user = {
   data: {},
   token: <string|null> null,
+  // coords: <Array<number>|null>null,
   loading: false,
 }
 
@@ -27,6 +28,13 @@ const setToken = (token: string): void => {
   }))
 };
 
+// const setCoords = (coords: number[]): void => {
+//   update(value => ({
+//     ...value,
+//     coords
+//   }))
+// };
+
 const isLoggedIn = () => {
   let isLogged = false;
   subscribe(value => {
@@ -43,6 +51,7 @@ const userStore = {
   clear,
   setData,
   setToken,
+  // setCoords,
   setLoading,
   isLoggedIn,
 };

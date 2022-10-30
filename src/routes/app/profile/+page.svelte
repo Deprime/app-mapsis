@@ -69,7 +69,7 @@
       {$_('pages.profile.user_data')}
     </h3>
     <div class="pb-6">
-      <Input class="w-full" bind:value={user.name} placeholder="Name" />
+      <Input class="w-full" bind:value={user.first_name} placeholder="Name" />
     </div>
 
     <div class="pb-6">
@@ -85,7 +85,12 @@
     </div>
 
     <div class="pb-8">
-      <Input class="w-full" type="email" bind:value={user.email} placeholder="Email" />
+      <Input
+        class="w-full"
+        type="email"
+        placeholder="Email"
+        bind:value={user.email}
+      />
     </div>
 
     <Button
@@ -96,7 +101,6 @@
     >
       {$_('actions.save')}
     </Button>
-
 
     <Button
       class="mt-24"

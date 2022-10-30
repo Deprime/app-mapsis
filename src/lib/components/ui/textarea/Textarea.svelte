@@ -11,9 +11,6 @@
   // Props
   export let disabled = false;
   export let loading  = false;
-  // export let block    = false;
-  // export let variant  = "default"
-  // export let size     = "";
   export let value: string|number|undefined = "";
   let ref: any;
 
@@ -39,9 +36,9 @@
 
   const getCssClassList = ($$disabled: boolean, $$loading: boolean): string => {
     const list = [
-      `ms-input`,
-      $$disabled && 'ms-input-disabled',
-      $$loading && 'ms-input-loading',
+      `ms-textarea`,
+      $$disabled && 'ms-textarea-disabled',
+      $$loading && 'ms-textarea-loading',
       ($$props.class) && $$props.class
     ];
     return list.filter(c => c).join(' ');

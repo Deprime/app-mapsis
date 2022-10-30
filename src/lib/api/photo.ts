@@ -1,14 +1,14 @@
 import $axios from '$lib/config/http';
 
-const PREFIX = "app/estate";
+const PREFIX = "app/posts";
 
 const photoApi = {
   /**
    * List
    * FIXME: add contract
    */
-  list: (estate_id: number): Promise<any> => {
-    const url = `${PREFIX}/${estate_id}/photos`;
+  list: (post_id: number): Promise<any> => {
+    const url = `${PREFIX}/${post_id}/photos`;
     return $axios.get(url)
   },
 
@@ -16,8 +16,8 @@ const photoApi = {
    * Create company
    * FIXME: add contract
    */
-  create: (estate_id: number, data: any): Promise<any> => {
-    const url = `${PREFIX}/${estate_id}/photos`;
+  create: (post_id: number, data: any): Promise<any> => {
+    const url = `${PREFIX}/${post_id}/photos`;
     return $axios.post(url, data, {headers: { "Content-Type": "multipart/form-data" }})
   },
 
@@ -25,16 +25,16 @@ const photoApi = {
    * Create company
    * FIXME: add contract
    */
-  remove: (estate_id: number, photo_id: number): Promise<any> => {
-    const url = `${PREFIX}/${estate_id}/photos/${photo_id}`;
+  remove: (post_id: number, photo_id: number): Promise<any> => {
+    const url = `${PREFIX}/${post_id}/photos/${photo_id}`;
     return $axios.delete(url)
   },
 
   /**
    * Set as poster
    */
-  setPoster: (estate_id: number, photo_id: number): Promise<any> => {
-    const url = `${PREFIX}/${estate_id}/photos/${photo_id}`;
+  setPoster: (post_id: number, photo_id: number): Promise<any> => {
+    const url = `${PREFIX}/${post_id}/photos/${photo_id}`;
     return $axios.put(url)
   },
 }

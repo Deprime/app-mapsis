@@ -9,10 +9,13 @@
 
   // Services
   import { userStore, mapStore } from '$lib/stores';
+  import { mapService } from '$lib/services';
   import { COORDS_UBUD } from '$lib/constants/map';
+  import { searchApi, dictionaryApi } from '$lib/api';
+
+
 
   // Data
-  let pos;
   let coords = COORDS_UBUD;
   let loading = true;
   const filters = {
@@ -26,7 +29,6 @@
     {id: 4, title: "Медитация"},
   ]};
 
-  let defaultMarkers = [];
   let markers = [];
   let hash = crypto.randomUUID();
 
@@ -98,25 +100,44 @@
   /**
    * On marker click
    */
-   const onMarkerClick = (e) => {
+  const onMarkerClick = (e) => {
     preview.marker = e.detail;
     preview.visible = true;
   }
 
-  onMount(() => {
-    pos = $userStore.data?.position;
-    coords = (pos && pos?.latitude && pos?.longitude) ? [pos.latitude, pos.longitude] : coords;
+  onMount(async () => {
 
-    const demoMarkers = localStorage.getItem('demoMarkers');
-    if (!demoMarkers) {
-      markers = generateDemoData();
-      localStorage.setItem('demoMarkers', JSON.stringify(markers));
+    const currentPostition = $mapStore.data.center;
+    coords = (currentPostition && currentPostition?.lat && currentPostition?.lng)
+      ? [currentPostition.lat, currentPostition.lng]
+      : coords;
+
+    try {
+      const geoinfo = await mapService.getGeopositionInfo(coords[1], coords[0]);
+      const isSegmentSupported = mapService.isSegmentSupported(geoinfo);
+
+      // SUPPORTED_SEGMENTS
+      if (!isSegmentSupported) {
+        coords = COORDS_UBUD;
+        mapStore.setCenter({
+          lat: coords[0],
+          lng: coords[1],
+        });
+      }
     }
-    else {
-      markers = JSON.parse(demoMarkers);
+    catch (error) {
+      throw new Error(error);
     }
 
-    defaultMarkers = markers.map(i => i);
+    // Load data
+    try {
+      const response = await searchApi.list();
+      markers = response.data
+    }
+    catch (error) {
+      throw new Error(error);
+    }
+
     loading = false;
   });
 </script>

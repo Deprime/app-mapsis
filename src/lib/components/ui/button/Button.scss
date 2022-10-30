@@ -36,6 +36,11 @@
     &:active {
       background: linear-gradient(93.87deg, #FFC371 -10.04%, #FF5F6D 103.84%);
     }
+
+    &.ms-button-disabled {
+      background: #DFDFDF;
+      color: #8C8E94;
+    }
   }
 
   &-danger {
@@ -50,24 +55,8 @@
     }
   }
 
-  // Disabled
   &-disabled {
-    @apply opacity-60 cursor-default;
-
-    &.button {
-      &-default {
-        &:hover,
-        &:active {
-          @apply bg-slate-200;
-        }
-      }
-
-      &-primary {
-        &:hover,
-        &:active {
-          @apply bg-cyan-600;
-        }
-      }
-    }
+    @apply cursor-not-allowed;
   }
+
 }

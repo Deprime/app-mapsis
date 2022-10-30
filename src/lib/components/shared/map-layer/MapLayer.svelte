@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
   import { browser } from '$app/environment';
-  import { goto } from '$app/navigation';
+  // import { goto } from '$app/navigation';
   import { toast } from '@zerodevx/svelte-toast'
 
   // Components
   import { Map, Geocoder, Marker, controls } from '@beyonk/svelte-mapbox';
-  const { GeolocateControl, NavigationControl, ScaleControl } = controls
+  const { GeolocateControl, NavigationControl } = controls;
   import { Avatar } from '$lib/components/ui';
 
   // Stores
@@ -15,6 +15,8 @@
 
   // Constants
   import { COORDS_UBUD } from '$lib/constants/map';
+
+  const CDN_URL = import.meta.env.VITE_CDN_URL;
   const MAPBOX_APIKEY = import.meta.env.VITE_MAPBOX_APIKEY;
 
   // Props
@@ -55,7 +57,6 @@
 
   const eventHandler = (e) => {
     const data = e.detail;
-    console.log('eventHandler', data);
   }
 
   /**
@@ -71,33 +72,35 @@
 </script>
 
 {#if browser}
-  <Map
-    accessToken={MAPBOX_APIKEY}
-    bind:this={map}
-    on:recentre={e => onRecentre(e) }
-    options={{ scrollZoom: false }}
-  >
+  <div>
+    <Map
+      accessToken={MAPBOX_APIKEY}
+      bind:this={map}
+      on:recentre={e => onRecentre(e) }
+      options={{ scrollZoom: false }}
+    >
 
-    {#each markers as mark }
-      <Marker
-        lat={mark.coords[0]}
-        lng={mark.coords[1]}
-        label={mark.title}
-        popup={false}
-      >
-        <Avatar
-          src={`/avatars/${mark.id}.jpg`}
-          on:click={() => { onMarkerClick(mark) }}
-        />
-      </Marker>
-    {/each}
+      {#each markers as mark }
+        <Marker
+          lat={mark.coords[0]}
+          lng={mark.coords[1]}
+          label={mark.title}
+          popup={false}
+        >
+          <Avatar
+            src={mark.poster ? `${CDN_URL}/${mark.poster.url}` : `/avatars/1.jpg`}
+            on:click={() => { onMarkerClick(mark) }}
+          />
+        </Marker>
+      {/each}
 
-    <NavigationControl />
-    <GeolocateControl
-      options={{ some: 'control-option' }}
-      on:eventname={eventHandler}
-    />
-  </Map>
+      <NavigationControl />
+      <GeolocateControl
+        options={{ some: 'control-option' }}
+        on:eventname={eventHandler}
+      />
+    </Map>
+  </div>
 {/if}
 
 <style lang="scss">
@@ -109,6 +112,20 @@
     @apply invisible hidden h-0 w-0;
     height: 0 !important;
     width: 0 !important;
+  }
+
+  :global(.mapboxgl-ctrl-bottom-left) {
+    @apply relative;
+
+    // .mapboxgl-ctrl {
+    //   @apply relative z-10
+    // }
+    // &:after {
+    //   content: " ";
+    //   height: 29px !important;
+    //   @apply block relative inset-0 z-20;
+    //   @apply bg-gray-300
+    // }
   }
   :global(.mapboxgl-ctrl-bottom-right) {
     @apply invisible hidden h-0 w-0;

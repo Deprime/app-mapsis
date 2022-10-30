@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
   import { _ } from '$lib/config/i18n';
 
-
+  // Components
   import { Edit3Icon } from 'svelte-feather-icons';
+
+  const CDN_URL = import.meta.env.VITE_CDN_URL;
 
   // Props
   export let post;
@@ -13,6 +15,7 @@
   // Data
   const dispatch = createEventDispatcher();
   const demoStatus = 'Опубликовано';
+  let posterurl = `https://usezon.ru/images/noimg.png`;
 
   // Methods
   /**
@@ -32,6 +35,13 @@
       dispatch('edit', post);
     }
   }
+
+
+  onMount(() => {
+    if (post.poster) {
+      posterurl = `${CDN_URL}/${post.poster.url}`;
+    }
+  });
 </script>
 
 <article class="post-card">
@@ -39,11 +49,11 @@
   <figure
     on:click={onViewClick}
     class="post-card--poster"
-    style={`background-image: url("/avatars/${post.id}.jpg")`}
+    style={`background-image: url("${posterurl}")`}
   >
-    <div class="post-card--poster__blur"></div>
+    <div class="post-card--poster__blur" />
     <img
-      src={`/avatars/${post.id}.jpg`}
+      src={posterurl}
       alt={post.title}
       class="post-card--poster__image"
     >
@@ -54,11 +64,11 @@
   </h3>
 
   <p class="post-card--price">
-    1 рубль
+    {post.price} ₽
   </p>
 
   <div class="post-card--address">
-    Jl. Raya Tumbakbayuh No.6, Tumbak Bayuh, Kec. Mengwi, Kabupaten Badung, Bali...
+    {post.address}
   </div>
 
   {#if editable}

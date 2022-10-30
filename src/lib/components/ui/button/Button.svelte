@@ -12,7 +12,7 @@
   export let disabled = false;
   export let loading  = false;
   export let block    = false;
-  export let variant  = "default"
+  export let variant: "default"|"primary" = "default"
   export let size     = "";
 
   $: cssClassList = getCssClassList(variant, block, disabled, loading, size);

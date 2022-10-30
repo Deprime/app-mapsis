@@ -16,5 +16,9 @@ body {
 
 .ms-h-screen {
   height: var(--mobile-screen);
-  // min-height: 650px;
+}
+
+
+.font-family-system-ui {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }

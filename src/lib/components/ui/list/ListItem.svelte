@@ -8,12 +8,9 @@
   const events = getEventsAction(current_component);
 
   // Props
-  export let disabled = false;
-  export let loading  = false;
+  // export let disabled = false;
+  // export let loading  = false;
   export let selected = false;
-  export let block    = false;
-  export let variant  = "default"
-  export let size     = "";
 
   // $: cssClassList = getCssClassList(variant, block, disabled, loading, size);
   $: cssClassList = getCssClassList(selected);
