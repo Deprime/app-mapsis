@@ -137,23 +137,25 @@
       </div>
     </header>
 
-    <Map
-      accessToken={MAPBOX_APIKEY}
-      bind:this={map}
-      on:recentre={e => onRecentre(e) }
-      on:drag={e => onDrag(e)}
-      options={{ scrollZoom: false }}
-      {zoom}
-    >
-      <Marker
-        lat={marker.coords[0]}
-        lng={marker.coords[1]}
-        popup={false}
-        color={'#FF5F6D'}
-      />
-      <NavigationControl />
-      <GeolocateControl options={{ some: 'control-option' }} />
-    </Map>
+    <div class="map-point-selector">
+      <Map
+        accessToken={MAPBOX_APIKEY}
+        bind:this={map}
+        on:recentre={e => onRecentre(e) }
+        on:drag={e => onDrag(e)}
+        options={{ scrollZoom: false }}
+        {zoom}
+      >
+        <Marker
+          lat={marker.coords[0]}
+          lng={marker.coords[1]}
+          popup={false}
+          color={'#FF5F6D'}
+        />
+        <NavigationControl />
+        <GeolocateControl options={{ some: 'control-option' }} />
+      </Map>
+    </div>
 
     <div class="absolute bottom-0 left-0 right-0 z-10 ms-bg-peach p-4 pb-6 space-y-4 rounded-t-2xl">
       <div class="relative">
@@ -207,7 +209,7 @@
     box-shadow: none !important;
   }
 
-  :global(.mapboxgl-map) {
+  :global(.map-point-selector .mapboxgl-map) {
     @apply w-full;
     height: calc(100vh - 150px) !important;
   }

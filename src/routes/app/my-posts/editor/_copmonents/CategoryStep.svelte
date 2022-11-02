@@ -30,8 +30,8 @@
   }
 </script>
 
-<section class="step step-4">
-  <header class="p-4 flex flex-row space-x-4 h-[60px]">
+<section class="step step-4 ms-h-screen overflow-y-scroll">
+  <header class="p-4 flex flex-row space-x-4 h-[60px] sticky top-0 z-[1] ms-bg-peach">
     <button on:click={() => { dispatch('back') }}>
       <XIcon size="24" />
     </button>
@@ -47,7 +47,7 @@
     </h4>
   </header>
 
-  <div class="px-4">
+  <div class="px-4 pb-24">
     <List>
       {#each category_list as category }
         <ListItem

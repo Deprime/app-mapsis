@@ -15,6 +15,7 @@
 
 {#if visible}
   <section class="ms-modal-wrapper">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       class="ms-fader"
       on:click={onFaderClick}

@@ -44,7 +44,7 @@
   $: isStep3 = form.is_phone_valid && form.is_phone_verified;
 
   // Methods
-  const checkPhoneNumber = (phoneNumber: string) => phoneNumber.length === 10;
+  const checkPhoneNumber = (phoneNumber: string) => phoneNumber.length === form.prefix?.length;
   const validateCode = (code: string) => code.length === 4;
 
   /**
@@ -124,7 +124,7 @@
    */
   const onPhoneInput = (e: CustomEvent) => {
     if (e.target.value.length > form.prefix.length) {
-      e.target.value = e.target.value.substring(0, 10);
+      e.target.value = e.target.value.substring(0, form.prefix.length);
     }
   }
 
@@ -145,7 +145,7 @@
       const request = await dictionaryApi.getPhonePrefixList();
       prefixList = request.data;
       form.prefix = prefixList[0];
-      form.prefix = form.prefix.value;
+      form.prefix_id = form.prefix.value;
     }
     catch (error: any) {
       throw new Error(error)

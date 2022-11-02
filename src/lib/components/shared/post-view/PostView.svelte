@@ -117,7 +117,7 @@
 
 <style lang="scss">
   .post-slider {
-    @apply relative h-[300px] overflow-hidden;
+    @apply relative h-[340px] overflow-hidden;
     @apply rounded-b-lg;
     @apply mb-5;
 
@@ -145,7 +145,7 @@
     }
 
     &-item {
-      @apply h-[300px];
+      @apply h-[340px];
       @apply bg-no-repeat bg-cover bg-center;
     }
   }

@@ -38,7 +38,7 @@
     @apply relative;
 
     .label-poster {
-      @apply absolute z-10 top-1 left-1;
+      @apply absolute z-[1] top-1 left-1;
       @apply px-1.5 py-0.5 rounded-md;
       @apply text-xs text-white bg-slate-900/70;
     }

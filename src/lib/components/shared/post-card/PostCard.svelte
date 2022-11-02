@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
+  import { goto } from '$app/navigation';
   import { _ } from '$lib/config/i18n';
 
   // Components
@@ -59,7 +60,11 @@
     >
   </figure>
 
-  <h3 class="post-card--title">
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <h3
+    class="post-card--title"
+    on:click={() => { goto(`/app/posts/${post.id}`); }}
+  >
     {post.title}
   </h3>
 

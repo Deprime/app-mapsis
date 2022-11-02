@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
   import { _ } from '$lib/config/i18n';
 
   // Components
   import { ChevronLeftIcon, PlusIcon  } from 'svelte-feather-icons';
-  import { Button } from '$lib/components/ui';
+  import { Button, Loader } from '$lib/components/ui';
   import PhotoItem from './PhotoItem.svelte';
 
-  import { photoApi } from '$lib/api';
+  import { authApi, photoApi } from '$lib/api';
 
   import type { IPhoto } from '$lib/interfaces';
 
@@ -43,7 +43,7 @@
     }
     catch (error: any) {
       errors = error.response?.data || {};
-      throw new Error(error)
+      throw new Error(error);
     }
     finally {
       loading = false;
@@ -94,18 +94,18 @@
    */
   const onFileChange = async (e: Event): Promise<any> => {
     uploading = true;
+
     try {
       const file_list = getFileListFromEvent(e);
       const files_arr = getNativeArrayFromFileList(file_list);
-
-      const payload = new FormData();
+      const payload   = new FormData();
 
       files_arr.forEach((file: any, i) => {
         payload.append(`photos[${i}]`, file);
       });
 
       await photoApi.create(post_id, payload);
-      loadPhotos(post_id);
+      await loadPhotos(post_id);
     }
     catch (error: any) {
       errors = error.response?.data || {};
@@ -119,16 +119,26 @@
   /**
    * Get file list from event
    */
-   const getFileListFromEvent = (e) => e.target.files || e.dataTransfer.files;
+  const getFileListFromEvent = (e) => e.target.files || e.dataTransfer.files;
 
   /**
    * Get native array from file list
    */
   const getNativeArrayFromFileList = (file_list: any) => Object.values(file_list);
+
+
+  onMount(() => {
+    if (window.File && window.FileReader && window.FormData) {
+      console.log('File uploading is supported');
+    }
+    else {
+      alert('File uploading is NOT supported for your browser');
+    }
+  })
 </script>
 
-<section class="step step-3">
-  <header class="p-4 flex flex-row space-x-4 h-[60px]">
+<section class="step step-3 ms-h-screen overflow-y-scroll">
+  <header class="p-4 flex flex-row space-x-4 h-[60px] sticky top-0 z-[2] ms-bg-peach">
     <button on:click={() => { dispatch('back') }}>
       <ChevronLeftIcon size="24" />
     </button>
@@ -138,37 +148,39 @@
     </h4>
   </header>
 
-  <div class="gallery pt-2">
+  <div class="gallery pt-2 pb-24">
     {#each photo_list as photo, index}
       <div class="gallery-item">
         <PhotoItem {photo} {loading}/>
       </div>
     {/each}
 
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div
-      class="gallery-item"
-      on:click={() => inputFileHidden.click()}
-    >
-      <div class="gallery-item--icon">
-        <PlusIcon />
+    {#if uploading}
+      <div class="gallery-item relative">
+        <Loader />
       </div>
-      <p>
-        {$_('actions.add_photo')}
-      </p>
-      {#key uploading}
-        <input
-          multiple
-          type="file"
-          accept="image/png, image/jpeg"
-          class="hidden"
-          disabled={uploading}
-          bind:files={photos}
-          on:change={e => onFileChange(e)}
-          bind:this={inputFileHidden}
-        />
-      {/key}
-    </div>
+    {/if}
+
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    {#if !uploading}
+      <div class="gallery-item" on:click={() => inputFileHidden.click()}>
+        <div class="gallery-item--icon">
+          <PlusIcon />
+        </div>
+        <p>
+          {$_('actions.add_photo')}
+        </p>
+          <input
+            type="file"
+            accept="image/png, image/jpeg"
+            class="hidden"
+            disabled={uploading}
+            bind:files={photos}
+            on:change={e => onFileChange(e)}
+            bind:this={inputFileHidden}
+          />
+      </div>
+    {/if}
   </div>
 
   {#if photo_list.length > 0}

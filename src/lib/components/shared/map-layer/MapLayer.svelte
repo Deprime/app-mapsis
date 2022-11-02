@@ -23,7 +23,6 @@
   export let coords = COORDS_UBUD;
   export let markers = [];
   export let zoom = 12;
-  export let hash = 'xxx';
 
   // Data
   const dispatch = createEventDispatcher();
@@ -72,7 +71,7 @@
 </script>
 
 {#if browser}
-  <div>
+  <div class="map-layer">
     <Map
       accessToken={MAPBOX_APIKEY}
       bind:this={map}
@@ -104,9 +103,9 @@
 {/if}
 
 <style lang="scss">
-  :global(.mapboxgl-map) {
+  :global(.map-layer .mapboxgl-map) {
     @apply w-full;
-    height: calc(100vh - 8rem) !important;
+    height: calc(100vh - 7rem) !important;
   }
   :global(.mapboxgl-ctrl-logo) {
     @apply invisible hidden h-0 w-0;

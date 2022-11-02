@@ -8,11 +8,14 @@
   import cloneDeep from 'lodash.clonedeep';
   import isEqual   from 'lodash.isequal';
 
-  import { Input, Button } from '$lib/components/ui';
+  import { Input, Button, Modal } from '$lib/components/ui';
   import { userStore, mapStore } from '$lib/stores';
 
   let user = cloneDeep($userStore.data);
   let userCopy = cloneDeep(user);
+  const logoutModal = {
+    visible: false,
+  }
 
   // Computed
   $: hasChanges = isEqual(user, userCopy);
@@ -30,11 +33,23 @@
    */
   const onExit = (): void => {
     localStorage.removeItem("demoMarkers");
-
     userStore.clear();
-    mapStore.clear();
-
+    // mapStore.clear();
     goto('/');
+  }
+
+  /**
+   *
+   */
+  const showExitModal = (): void => {
+    logoutModal.visible = true;
+  }
+
+  /**
+   *
+   */
+  const closeLogoutModal = (): void => {
+    logoutModal.visible = false;
   }
 
   /**
@@ -102,14 +117,31 @@
       {$_('actions.save')}
     </Button>
 
-    <Button
-      class="mt-24"
-      block
-      variant="danger"
-      on:click={onExit}
-    >
-      Clear test data and exit
-    </Button>
-  </section>
+    <div class="fixed bottom-[90px] left-0 right-0 px-4 opacity-70">
+      <button class="w-full bg-white p-4 rounded-lg text-sm text-gray-600 font-semibold" on:click={showExitModal}>
+        {$_('actions.logout_form_app')}
+      </button>
+    </div>
 
+    <Modal bind:visible={logoutModal.visible}>
+      <header slot="header">
+        <h4 class="text-center">Выйти из Mapsis?</h4>
+      </header>
+      <div slot="body">
+        <div class="text-center pb-10">
+          <i class="em em-cry text-[36px]" aria-label="CRYING FACE"></i>
+        </div>
+
+        <div class="flex flex-row space-x-4">
+          <Button block variant="primary" on:click={onExit}>
+            {$_('actions.logout')}
+          </Button>
+
+          <Button block on:click={closeLogoutModal}>
+            {$_('actions.cancel')}
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  </section>
 </section>
