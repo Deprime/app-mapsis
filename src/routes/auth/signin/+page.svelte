@@ -4,17 +4,17 @@
   import { goto } from '$app/navigation';
 
   import { ChevronLeftIcon } from 'svelte-feather-icons';
-	import { Input, Select, Button } from '$lib/components/ui';
+	import { Input, Select, Button, ValidationError } from '$lib/components/ui';
   import { Header, PolicyFooter } from '$lib/components/structure';
 
   // Services
-  import { authApi, userApi, dictionaryApi } from '$lib/api';
-  import { userStore } from '$lib/stores';
+  import { checkPhoneNumberLenght } from '$lib/helpers/phone';
+  import { authApi } from '$lib/api';
+  import { userStore, dictionaryStore } from '$lib/stores';
 
   // Types
-  import type { IPhonePrefix } from '$lib/interfaces';
+  // import type { IPhonePrefix } from '$lib/interfaces';
 
-  let prefixList: IPhonePrefix[] = []
   const form = {
     loading: false,
     password: "",
@@ -29,16 +29,14 @@
   }
 
   // Reactive
-  $: isPhoneValid = checkPhoneNumber(form.phone);
+  $: isPhoneValid = checkPhoneNumberLenght(form.phone, form.prefix?.length);
 
   // Methods
-  const checkPhoneNumber = (phoneNumber: string) => phoneNumber.length === form.prefix?.length;
-
   /**
    * On prefix change
    */
-   const onPrefixChange = (e) => {
-    form.prefix = prefixList.find(el => el.value === form.prefix_id);
+  const onPrefixChange = (e) => {
+    form.prefix = $dictionaryStore.prefixes.find(el => el.value === form.prefix_id);
   }
 
   /**
@@ -79,19 +77,8 @@
    * loadInititalData
    */
   const loadInititalData = async (): Promise<any> => {
-    form.loading = true;
-    try {
-      const request = await dictionaryApi.getPhonePrefixList();
-      prefixList = request.data;
-      form.prefix = prefixList[0];
-      form.prefix_id = form.prefix.value;
-    }
-    catch (error: any) {
-      throw new Error(error)
-    }
-    finally {
-      form.loading = false;
-    }
+    form.prefix    = $dictionaryStore.prefixes[0];
+    form.prefix_id = form.prefix.value;
   }
 
   onMount(async () => {
@@ -103,15 +90,15 @@
 	<title>Home</title>
 </svelte:head>
 
-<div class="page ms-h-screen flex flex-col justify-between items-end content-center pb-8">
+<div class="page ms-h-screen flex flex-col justify-between items-end content-center">
   <Header>
-    <a href="/">
+    <a href="/auth">
       <ChevronLeftIcon />
     </a>
   </Header>
 
-  <section></section>
-  <section class="w-full flex flex-col px-4 space-y-4">
+  <section class="basis-5/12"></section>
+  <section class="basis-6/12 w-full flex flex-col px-4 space-y-4">
     <h4 class="text-center">
       {$_('pages.signin.title')}
     </h4>
@@ -122,7 +109,7 @@
         bind:value={form.prefix_id}
         class="w-5/12"
       >
-        {#each prefixList as record }
+        {#each $dictionaryStore.prefixes as record }
           <option value={record.value}>
             {record.prefix}
           </option>
@@ -140,13 +127,19 @@
       />
     </div>
 
-    <div class="">
+    <div class="space-y-2">
       <Input
         placeholder={$_('pages.signup_email.your_password')}
         class="w-full"
         type="password"
         bind:value={form.password}
       />
+
+      {#if form.errors?.error}
+        <ValidationError>
+          {$_('validation.wrong_creditionals')}
+        </ValidationError>
+      {/if}
     </div>
     <div class="hidden px-6">
       <a href="#">
@@ -155,7 +148,7 @@
     </div>
   </section>
 
-  <div class="w-full px-4 pt-8">
+  <div class="basis-1/12 w-full px-4 pt-8 mb-10">
     <Button
       variant="primary"
       block

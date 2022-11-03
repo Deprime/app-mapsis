@@ -91,10 +91,6 @@
 .requirements {
   @apply flex flex-col;
 
-  .info {
-    @apply font-medium mb-3;
-  }
-
   &-list {
     @apply flex flex-col space-y-2;
 

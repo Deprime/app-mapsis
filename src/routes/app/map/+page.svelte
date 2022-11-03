@@ -154,10 +154,9 @@
   <div class="relative z-10">
     {#if !loading}
       <MapLayer
+        {markers}
         coords={mapStore.getData('center')}
         zoom={mapStore.getData('zoom')}
-        {markers}
-        {hash}
         on:markerClick={onMarkerClick}
       />
     {/if}

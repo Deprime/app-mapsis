@@ -48,7 +48,11 @@
       }
     }
 
-    const nums = inputList.map((el, i) => (i === index) ? value : el.value.toString())
+    const nums = inputList.map((el, i) => {
+        return (i === index)
+          ? e.target.value
+          : el.value.toString();
+      })
       .filter(el => el !== '')
       .map(el => parseInt(el))
     const sum = (nums.length > 0) ? parseInt(nums.join("")) : null;
@@ -79,7 +83,7 @@
       {disabled}
       bind:value={item.value}
       bind:this={item.ref}
-      on:input={(e) => onChange(e, i)}
+      on:input={e => onChange(e, i)}
     />
   {/each}
 </div>

@@ -8,41 +8,48 @@
   import { LanguageSelect } from '$lib/components/shared';
 
   const APP_NAME = import.meta.env.VITE_APP_NAME;
+
+  // Methods
+  const gotoSignIn = () => {
+    goto('/auth/signin');
+  }
+
+  const gotoSignUp = () => {
+    goto('/auth/signup');
+  }
 </script>
 
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
-<div class="page ms-h-screen flex flex-wrap content-end pb-6">
-  <div class="basis-full pt-6 pb-2">
-    <img src={Logo} alt={APP_NAME} class="my-0 mx-auto"/>
-  </div>
-
-  <div class="basis-full text-sm text-center px-4 pt-2">
-    <p class="font-normal text-slate-400">
-      {@html $_('app.intro')}
+<div class="page ms-h-screen flex flex-col justify-between px-4">
+  <div class="basis-6/12 text-center">
+    <p class="text-sm font-semibold mt-10">
+      {$_('pages.partnership.title')}
     </p>
   </div>
 
-  <div class="basis-full py-12 text-center">
-    <LanguageSelect />
-  </div>
+  <div class="basis-6/12 flex flex-col justify-between">
+    <div class="text-center">
+      <figure class="mb-6">
+        <img src={Logo} alt={APP_NAME} class="my-0 mx-auto"/>
+      </figure>
+      <p class="text-sm font-semibold mb-8">
+        {@html $_('app.intro')}
+      </p>
+      <div class="mx-auto w-48">
+        <LanguageSelect />
+      </div>
+    </div>
 
-  <div class="basis-full pt-4 pb-0 px-4">
-    <Button
-      block
-      variant="primary"
-      class="mb-4"
-      on:click={() => {goto('/auth/signin')}}
-    >
-      {$_('actions.signin', {default: "Sign in"})}
-    </Button>
-    <Button
-      block
-      on:click={() => {goto('/auth/signup')}}
-    >
-      {$_('actions.signup', {default: "Sign up"})}
-    </Button>
+    <footer class="space-y-4 w-full mb-10">
+      <Button block variant="primary" on:click={gotoSignIn}>
+        {$_('actions.signin', {default: "Sign in"})}
+      </Button>
+      <Button block on:click={gotoSignUp}>
+        {$_('actions.signup', {default: "Sign up"})}
+      </Button>
+    </footer>
   </div>
 </div>

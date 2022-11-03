@@ -7,8 +7,6 @@
   @apply transition-all duration-200 ease-in-out;
   @apply select-none;
 
-  // Sizing
-  // &-lg {}
 
   // Block state
   &-block {
@@ -17,13 +15,18 @@
 
   // Variants
   &-default {
-    @apply bg-slate-200;
+    @apply bg-[#F0EBE3];
+    @apply text-[#8C8E94];
 
-    &:hover {
-      @apply bg-slate-300;
-    }
+    &:hover,
     &:active {
-      @apply bg-slate-400;
+      @apply bg-[#F3E8D8];
+      @apply text-[#8C8E94];
+    }
+
+    &.ms-button-disabled {
+      @apply bg-[#EBEBEB];
+      @apply text-[#8C8E94];
     }
   }
 
@@ -38,8 +41,9 @@
     }
 
     &.ms-button-disabled {
-      background: #DFDFDF;
-      color: #8C8E94;
+      background: #EBEBEB;
+      // @apply bg-[#EBEBEB];
+      @apply text-[#8C8E94];
     }
   }
 

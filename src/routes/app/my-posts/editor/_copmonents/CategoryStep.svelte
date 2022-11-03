@@ -9,7 +9,7 @@
   import { XIcon } from 'svelte-feather-icons';
 
   // Props
-  export let loading = false;
+  // export let loading = false;
   export let category_id: number|null;
   export let category_list: any[] = [];
 

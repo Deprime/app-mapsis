@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
+  // import { createEventDispatcher } from 'svelte';
   import { _ } from '$lib/config/i18n';
 
   const CDN_URL = import.meta.env.VITE_CDN_URL;
@@ -7,11 +7,11 @@
   import type { IPhoto } from '$lib/interfaces';
 
   // Props
-  export let loading = false;
+  // export let loading = false;
   export let photo: IPhoto;
 
   // Data
-  const dispatch = createEventDispatcher();
+  // const dispatch = createEventDispatcher();
 
   // Methods
 </script>

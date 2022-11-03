@@ -10,7 +10,7 @@
   import { MapPointSelector } from '$lib/components/shared';
 
   // Props
-  export let loading = false;
+  // export let loading = false;
   export let title: string;
   export let description: string;
   export let address: string;
@@ -105,8 +105,11 @@
     </div>
 
     <Input
-      class="w-full"
       placeholder={$_('pages.editor.post_price')}
+      class="w-full"
+      type="tel"
+      inputmode="numeric"
+      required
       bind:value={price}
     />
   </div>

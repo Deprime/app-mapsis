@@ -23,7 +23,7 @@
 
 <section class="step step-4 ms-h-screen pb-24 overflow-y-scroll">
   <button
-    class="ms-bg-peach rounded-full p-2 flex absolute top-3 left-3 z-10"
+    class="ms-bg-peach rounded-full p-2 flex absolute top-2 left-2 z-10"
     on:click={() => { dispatch('back') }}
   >
     <ChevronLeftIcon size="24" />
@@ -34,7 +34,7 @@
     {photo_list}
   />
 
-  <div class="step-switcher !pb-5 pt-3 rounded-t-lg !bottom-0 backdrop-blur-md bg-white/30">
+  <div class="step-switcher !pb-6 pt-3 rounded-t-lg !bottom-0 backdrop-blur-md bg-white/30">
     <Button
       block
       variant="primary"

@@ -10,7 +10,7 @@
   import type { IPhoto } from '$lib/interfaces';
 
   // Props
-  export let loading = false;
+  // export let loading = false;
   export let post: any;
   export let photo_list: IPhoto[] = [];
 
@@ -89,9 +89,11 @@
       {post.price} ₽
     </p>
 
-    <p class="post-address">
-      {post.address}
-    </p>
+    {#if post.address?.length > 5}
+      <p class="post-address">
+        {post.address}
+      </p>
+    {/if}
 
     <button class="ms-link mb-4 text-sm">
       {$_('actions.show_on_map')}

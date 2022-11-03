@@ -1,5 +1,7 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
+  import { slide } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
   import { browser } from '$app/environment';
   import { _ } from '$lib/config/i18n';
 
@@ -29,10 +31,10 @@
   };
   let map;
   let local_suggested_address = suggested_address;
-  const tileLayerOptions = {
-    minZoom: 10,
-    maxZoom: 20,
-    maxNativeZoom: 19,
+  const slideConfig = {
+    delay: 50,
+    duration: 250,
+    easing: quintOut,
   };
 
   // Methods
@@ -158,26 +160,28 @@
     </div>
 
     <div class="absolute bottom-0 left-0 right-0 z-10 ms-bg-peach p-4 pb-6 space-y-4 rounded-t-2xl">
-      <div class="relative">
-        <Textarea
-          value={local_suggested_address}
-          placeholder={$_("location.search_hint")}
-          readonly
-          class="w-full !pr-7 resize-none"
-        />
-        {#if local_suggested_address.length > 0}
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
-          <span
-            class="absolute top-2.5 right-2 z-8"
-            on:click={clearSuggestedAddress}
-          >
-            <XIcon
-              class=" text-gray-700"
-              size="16"
-            />
-          </span>
-        {/if}
-      </div>
+      {#if local_suggested_address.length > 0}
+        <div class="relative" transition:slide={slideConfig}>
+          <Textarea
+            value={local_suggested_address}
+            placeholder={$_("location.search_hint")}
+            readonly
+            class="w-full !pr-7 resize-none"
+          />
+          {#if local_suggested_address.length > 0}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <span
+              class="absolute top-2.5 right-2 z-8"
+              on:click={clearSuggestedAddress}
+            >
+              <XIcon
+                class="text-gray-700"
+                size="16"
+              />
+            </span>
+          {/if}
+        </div>
+      {/if}
 
       {#if local_suggested_address.length > 0}
         <Button variant="primary" block on:click={closeMapSelector}>

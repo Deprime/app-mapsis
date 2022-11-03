@@ -1,23 +1,24 @@
 <script lang="ts">
   import "$lib/assets/scss/app.scss";
 
-  import { onMount } from "svelte";
-  import { get } from "svelte/store";
-  // import { page } from '$app/stores';
-  import { isLocaleLoaded, _ } from '$lib/config/i18n';
-  import { appStore } from '$lib/stores';
+  import { onMount }            from "svelte";
+  import { get }                from "svelte/store";
+  import { isLocaleLoaded, _ }  from '$lib/config/i18n';
+  import { appStore }           from '$lib/stores';
 
   // Serivces
-  import { i18nService } from "$lib/services";
+  import { i18nService, dictionaryService } from "$lib/services";
 
   // Components
-  import { LoadingScreen } from "$lib/components/shared";
+  import { LoadingScreen, ErrorNoConnection } from "$lib/components/shared";
   import { Modal, Button } from "$lib/components/ui";
   // import PageTransitions    from '$lib/components/effects/PageTransition.svelte';
 
   import { DEFAULT_LOCALE } from '$lib/constants/languages';
 
   // Data
+  let loading = true;
+  let errors: any = null;
   const MINIMAL_HEIGHT = 600;
   let screenHeight = `${MINIMAL_HEIGHT}px`;
   let setupButton;
@@ -47,7 +48,7 @@
   }
 
   /**
-   *
+   * On cancel
    */
   const onCancel = () => {
     setupModal.visible = false;
@@ -63,46 +64,61 @@
 
     const $$app = get(appStore);
     const defaultLocale = $$app?.data?.locale || DEFAULT_LOCALE;
-    await i18nService.setupLocale(defaultLocale);
+
+    try {
+      await i18nService.setupLocale(defaultLocale);
+      await Promise.all([
+        await dictionaryService.getPhonePrefixList(),
+        await dictionaryService.getCategoryList(),
+      ]);
+    }
+    catch (error) {
+      errors = error;
+      throw new Error(error);
+    }
+    finally {
+      loading = false;
+    }
   });
 </script>
 
 <!-- <svelte:window on:resize={onResize} /> -->
 <div class="app-wrapper relative ms-h-screen" style={`--mobile-screen: ${screenHeight};`}>
   <main class="app-body">
-    {#if $isLocaleLoaded}
-      <slot />
+    {#if $isLocaleLoaded && !loading}
+      {#if errors}
+        <ErrorNoConnection />
+      {:else}
+        <slot />
+        <Modal bind:visible={setupModal.visible} faderClosable={false}>
+          <header slot="header" class="text-center">
+            <h4>
+              {$_('setup.title')}
+            </h4>
+          </header>
 
-      <Modal bind:visible={setupModal.visible} faderClosable={false}>
-        <header slot="header" class="text-center">
-          <h4>
-            {$_('setup.title')}
-          </h4>
-        </header>
-
-        <div slot="body" class="px-2 pb-2 text-sm">
-          <div class="text-center pb-10">
-            <i class="em em-iphone text-[36px]"  aria-label="MOBILE PHONE"></i>
+          <div slot="body" class="px-2 pb-2 text-sm">
+            <div class="text-center pb-10">
+              <i class="em em-iphone text-[36px]"  aria-label="MOBILE PHONE"></i>
+            </div>
+            <p>
+              {$_('setup.description')}
+            </p>
           </div>
-          <p>
-            {$_('setup.description')}
-          </p>
-        </div>
 
-        <footer slot="footer" class="flex flex-col space-y-4">
-          <Button block variant="primary" bind:this={setupButton}>
-            {$_('actions.install')}
-          </Button>
+          <footer slot="footer" class="flex flex-col space-y-4">
+            <Button block variant="primary" bind:this={setupButton}>
+              {$_('actions.install')}
+            </Button>
 
-          <Button block on:click={onCancel}>
-            {$_('actions.cancel')}
-          </Button>
-        </footer>
-      </Modal>
+            <Button block on:click={onCancel}>
+              {$_('actions.cancel')}
+            </Button>
+          </footer>
+        </Modal>
+      {/if}
     {:else}
       <LoadingScreen />
     {/if}
   </main>
-
-
 </div>

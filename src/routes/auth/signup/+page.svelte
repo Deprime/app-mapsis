@@ -5,23 +5,22 @@
 
   // Components
   import { ChevronLeftIcon } from 'svelte-feather-icons';
-	import { Input, Select, Button, CodeInput } from '$lib/components/ui';
+	import { Input, Select, Button, CodeInput, ValidationError } from '$lib/components/ui';
   import { Header, PolicyFooter } from '$lib/components/structure';
   import { PasswordControl } from '$lib/components/shared';
 
   // Services
-  import { authApi, userApi, dictionaryApi } from '$lib/api';
-  import { userStore } from '$lib/stores';
+  import { checkPhoneNumberLenght, checkVerificationCodeLenght } from '$lib/helpers/phone';
+  import { authApi } from '$lib/api';
+  import { userStore, dictionaryStore } from '$lib/stores';
 
   // Types
-  import type { IPhonePrefix } from '$lib/interfaces';
+  // import type { IPhonePrefix } from '$lib/interfaces';
 
   // Data
   const codeInput = {
     ref: null,
   };
-
-  let prefixList: IPhonePrefix[] = []
   const form = {
     loading: false,
     password: "",
@@ -36,17 +35,14 @@
   }
 
   // Reactive
-  $: isPhoneValid = checkPhoneNumber(form.phone);
-  $: isCodeValid = validateCode(form.validation_code.toString());
+  $: isPhoneValid = checkPhoneNumberLenght(form.phone, form.prefix?.length);
+  $: isCodeValid = checkVerificationCodeLenght(form.validation_code);
 
   $: isStep1 = !form.is_phone_valid;
   $: isStep2 = form.is_phone_valid && !form.is_phone_verified;
   $: isStep3 = form.is_phone_valid && form.is_phone_verified;
 
   // Methods
-  const checkPhoneNumber = (phoneNumber: string) => phoneNumber.length === form.prefix?.length;
-  const validateCode = (code: string) => code.length === 4;
-
   /**
    * Request Sms Code
    */
@@ -116,7 +112,7 @@
    * On prefix change
    */
   const onPrefixChange = (e) => {
-    form.prefix = prefixList.find(el => el.value === form.prefix_id);
+    form.prefix = $dictionaryStore.prefixes.find(el => el.value === form.prefix_id);
   }
 
   /**
@@ -129,30 +125,18 @@
   }
 
   /**
-   * On change
+   * On validation code change
    */
-  const onChange = (e: CustomEvent) => {
+  const onValidationCodeChange = (e: CustomEvent) => {
     form.validation_code = e.detail;
-    console.log(form.validation_code)
   }
 
   /**
    * loadInititalData
    */
   const loadInititalData = async (): Promise<any> => {
-    form.loading = true;
-    try {
-      const request = await dictionaryApi.getPhonePrefixList();
-      prefixList = request.data;
-      form.prefix = prefixList[0];
-      form.prefix_id = form.prefix.value;
-    }
-    catch (error: any) {
-      throw new Error(error)
-    }
-    finally {
-      form.loading = false;
-    }
+    form.prefix    = $dictionaryStore.prefixes[0];
+    form.prefix_id = form.prefix.value;
   }
 
   onMount(async () => {
@@ -168,7 +152,7 @@
 
 <div class="page ms-h-screen">
   <Header>
-    <a href="/">
+    <a href="/auth">
       <ChevronLeftIcon />
     </a>
   </Header>
@@ -182,35 +166,37 @@
 
     {#if isStep1}
       <section class="px-4 space-y-6">
-        <div class="flex flex-row ">
-          <Select
-            on:change={e => onPrefixChange(e)}
-            bind:value={form.prefix_id}
-            class="w-5/12"
-          >
-            {#each prefixList as record }
-              <option value={record.value}>
-                {record.prefix}
-              </option>
-            {/each}
-          </Select>
-          <Input
-            class="ml-4 w-full tracking-widest"
-            type="tel"
-            max={form.prefix?.length || 9}
-            placeholder="XXX XXX XXXX"
-            inputmode="numeric"
-            required
-            on:input={e => onPhoneInput(e)}
-            bind:value={form.phone}
-          />
-        </div>
-
-        {#if form.errors?.phone}
-          <div class="validation-error">
-            {form.errors.phone || ""}
+        <div>
+          <div class="flex flex-row pb-2">
+            <Select
+              on:change={e => onPrefixChange(e)}
+              bind:value={form.prefix_id}
+              class="w-5/12"
+            >
+              {#each $dictionaryStore.prefixes as record }
+                <option value={record.value}>
+                  {record.prefix}
+                </option>
+              {/each}
+            </Select>
+            <Input
+              class="ml-4 w-full tracking-widest"
+              type="tel"
+              max={form.prefix?.length || 9}
+              placeholder="XXX XXX XXXX"
+              inputmode="numeric"
+              required
+              on:input={e => onPhoneInput(e)}
+              bind:value={form.phone}
+            />
           </div>
-        {/if}
+
+          {#if form.errors?.phone}
+            <ValidationError>
+              {$_('validation.phone_registred')}
+            </ValidationError>
+          {/if}
+        </div>
 
         <div>
           <Button
@@ -226,17 +212,18 @@
     {/if}
 
     {#if isStep2}
-      <section class="px-4 space-y-6">
+      <section class="px-4 space-y-8">
         <div class="flex flex-row px-6">
           <div class="flex justify-center w-full">
             <CodeInput
               inputCount={4}
               bind:this={codeInput.ref}
-              on:change={onChange}
+              on:change={onValidationCodeChange}
             />
           </div>
         </div>
-        <div class="px-4 pt-6">
+
+        <div>
           <div class="ms-link pb-6 text-center text-sm">
             {$_('pages.signup.resend_code')}
           </div>
@@ -244,7 +231,7 @@
           <Button
             block
             disabled={!isCodeValid}
-            variant={isCodeValid ? 'primary' : 'default'}
+            variant='primary'
             on:click={validatePhone}
           >
             {$_('actions.continue')}

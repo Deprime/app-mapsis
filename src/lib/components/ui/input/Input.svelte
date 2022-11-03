@@ -28,11 +28,25 @@
   $: cssClassList = getCssClassList(disabled, loading);
 
   // Methods
+  const isInteger = (val: string|number) => {
+    return !isNaN(val) && parseInt(Number(val)) == value && !isNaN(parseInt(val, 10));
+  }
   /**
    * On input
    */
   const onInput = (e: InputEvent): void  => {
     const val = e.target?.value;
+
+    if (val.length > 0) {
+      if ($$props.inputmode && $$props.inputmode === 'numeric') {
+        if (!isInteger(val)) {
+          const parsed = isNaN(parseInt(val)) ? "" : parseInt(val);
+          e.target.value = parsed;
+          value = parsed;
+          return
+        }
+      }
+    }
     value = val;
   };
 

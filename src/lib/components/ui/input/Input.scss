@@ -10,6 +10,11 @@
   @apply transition-all;
   @apply outline-none;
 
+  &[type='tel'],
+  &[type='number'] {
+    @apply font-medium;
+  }
+
   &:active,
   &:focus {
     @apply ring-2 ring-blue-200 focus:ring-blue-300 outline-none;

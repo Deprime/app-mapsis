@@ -1,11 +1,10 @@
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte';
   import { browser } from '$app/environment';
-  // import { goto } from '$app/navigation';
   import { toast } from '@zerodevx/svelte-toast'
 
   // Components
-  import { Map, Geocoder, Marker, controls } from '@beyonk/svelte-mapbox';
+  import { Map,  Marker, controls } from '@beyonk/svelte-mapbox';
   const { GeolocateControl, NavigationControl } = controls;
   import { Avatar } from '$lib/components/ui';
 
@@ -27,11 +26,6 @@
   // Data
   const dispatch = createEventDispatcher();
   let map;
-  const tileLayerOptions = {
-    minZoom: 10,
-    maxZoom: 20,
-    maxNativeZoom: 19,
-  };
 
   // Methods
   /**
@@ -47,6 +41,12 @@
    */
   const onMarkerClick = (marker) => {
     if (marker.id) {
+      const mapZoom = map.getMap().getZoom();
+      console.log(map.getMap())
+      // map.flyTo({center: [
+      //   marker.coords[1],
+      //   marker.coords[0] + ((marker.coords[0] * 0.03 / mapZoom) / mapZoom),
+      // ]})
       dispatch('markerClick', marker);
     }
     else {
@@ -67,6 +67,45 @@
 
   onMount(() => {
     map.setCenter([coords.lng, coords.lat], zoom);
+
+    if (markers.length === 1) {
+      const single = markers[0];
+      map.setCenter([single.coords[1], single.coords[0]], zoom);
+    }
+
+    if (markers.length > 1) {
+      let maxLng = 0;
+      let maxLat = 0;
+      let minLng = 0;
+      let minLat = 0;
+
+      markers.forEach((el, i) => {
+        if (i === 0) {
+          maxLng = el.coords[1] // lng
+          minLng = el.coords[1] // lng
+          maxLat = el.coords[0] // lat
+          minLat = el.coords[0] // lat
+        }
+        else {
+          maxLng = maxLng < el.coords[1] ? el.coords[1] : maxLng // lng
+          minLng = minLng > el.coords[1] ? el.coords[1] : minLng // lng
+          maxLat = maxLng < el.coords[0] ? el.coords[0] : maxLat // lng
+          minLat = minLng > el.coords[0] ? el.coords[0] : minLat // lng
+        }
+      });
+
+      const lngPrecision = 0.006;
+      const latPrecision = 0.003;
+      map.fitBounds([
+        {
+          lng: minLng - lngPrecision,
+          lat: minLat- latPrecision
+        }, {
+          lng: maxLng + lngPrecision,
+          lat: maxLat + latPrecision
+        }
+      ]);
+    }
   });
 </script>
 
@@ -74,11 +113,10 @@
   <div class="map-layer">
     <Map
       accessToken={MAPBOX_APIKEY}
-      bind:this={map}
-      on:recentre={e => onRecentre(e) }
       options={{ scrollZoom: false }}
+      on:recentre={e => onRecentre(e) }
+      bind:this={map}
     >
-
       {#each markers as mark }
         <Marker
           lat={mark.coords[0]}
@@ -105,7 +143,7 @@
 <style lang="scss">
   :global(.map-layer .mapboxgl-map) {
     @apply w-full;
-    height: calc(100vh - 7rem) !important;
+    height: calc(100vh - 120px) !important;
   }
   :global(.mapboxgl-ctrl-logo) {
     @apply invisible hidden h-0 w-0;

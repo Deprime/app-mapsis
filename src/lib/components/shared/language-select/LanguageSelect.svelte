@@ -3,8 +3,10 @@
   import { i18nService } from '$lib/services';
 
   import { LANGUAGE_LIST } from '$lib/constants/languages';
-
 	import { Select } from '$lib/components/ui';
+
+  //
+  let selectedLocale = $appStore.data.locale;
 
   // Methods
   const onChangeLocale = async (event: CustomEvent) => {
@@ -13,10 +15,9 @@
   }
 </script>
 
-<Select class="w-5/12" on:change={onChangeLocale}>
+<Select class="w-full" on:change={onChangeLocale} bind:value={selectedLocale}>
   {#each LANGUAGE_LIST as lang}
     <option
-      selected={$appStore.data.locale === lang.locale}
       value={lang.locale}
       label={lang.native_title}
     >

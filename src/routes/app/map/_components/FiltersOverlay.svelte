@@ -8,13 +8,13 @@
   import { SlidersIcon, XIcon } from 'svelte-feather-icons';
 
   // Props
-  export let categoires = <Array<any>>[];
+  // export let categoires = <Array<any>>[];
   export let isActive = false;
   export let eventCount = 0;
 
   // Data
   const dispatch = createEventDispatcher();
-  let selectedFilters: number[] = [];
+  // let selectedFilters: number[] = [];
   let dateInt = `1`;
 
   // Reactive

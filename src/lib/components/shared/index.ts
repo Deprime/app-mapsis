@@ -11,3 +11,5 @@ export { default as ChatCard }        from "./chat-card/ChatCard.svelte";
 
 export { default as PostCard } from "./post-card/PostCard.svelte";
 export { default as PostView } from "./post-view/PostView.svelte";
+
+export { default as ErrorNoConnection } from "./errors/ErrorNoConnection.svelte";
