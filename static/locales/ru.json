@@ -31,7 +31,8 @@
   },
   "validation": {
     "wrong_creditionals": "Неверные данные авторизации",
-    "phone_registred": "Этот номер телефона уже зарегистрирован"
+    "phone_registred": "Этот номер телефона уже зарегистрирован",
+    "trottling": "Слишком много попыток запроса"
   },
   "errors": {
     "no_connection": {
@@ -73,8 +74,8 @@
       "enter_phone": "Укажите номер телефона",
       "enter_sms_code": "Введите код из СМС",
       "enter_password": "Введите пароль",
-      "resend_timeout": "Повторная отправка через {seconds} сек",
-      "resend_code": "Отправить код повторно",
+      "resend_timeout": "Повторный звонок через <span>{seconds}</span> сек",
+      "resend_code": "Перезвоните мне",
       "get_code": "Получить код"
     },
     "signup_email": {

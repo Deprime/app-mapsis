@@ -2,15 +2,22 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { _ } from '$lib/config/i18n';
+  import dayjs from 'dayjs';
 
   // Components
   import { ChevronLeftIcon } from 'svelte-feather-icons';
 	import { Input, Select, Button, CodeInput, ValidationError } from '$lib/components/ui';
   import { Header, PolicyFooter } from '$lib/components/structure';
-  import { PasswordControl } from '$lib/components/shared';
+  import { PasswordControl, ResendCodeCountdown } from '$lib/components/shared';
 
   // Services
-  import { checkPhoneNumberLenght, checkVerificationCodeLenght } from '$lib/helpers/phone';
+  import {
+    checkPhoneNumberLenght,
+    checkVerificationCodeLenght,
+    generatePhonePlaceholde
+  } from '$lib/helpers/phone';
+  import { getPassedSecondsFromTS } from '$lib/helpers/datetime';
+
   import { authApi } from '$lib/api';
   import { userStore, dictionaryStore } from '$lib/stores';
 
@@ -18,8 +25,11 @@
   // import type { IPhonePrefix } from '$lib/interfaces';
 
   // Data
+
   const codeInput = {
     ref: null,
+    visible: true,
+    timeout: 30,
   };
   const form = {
     loading: false,
@@ -37,22 +47,58 @@
   // Reactive
   $: isPhoneValid = checkPhoneNumberLenght(form.phone, form.prefix?.length);
   $: isCodeValid = checkVerificationCodeLenght(form.validation_code);
+  $: phonePlaceholder = form.prefix?.length ? generatePhonePlaceholde(form.prefix.length) : ""
 
   $: isStep1 = !form.is_phone_valid;
   $: isStep2 = form.is_phone_valid && !form.is_phone_verified;
   $: isStep3 = form.is_phone_valid && form.is_phone_verified;
 
   // Methods
+
+  const getCodeRequestedAt = (): string|null => {
+    return localStorage.getItem('code_requested_at');
+  }
+  const setCodeRequestedAt = (): number => {
+    const timestamp = dayjs().unix();
+    localStorage.setItem('code_requested_at', `${timestamp}`);
+    return timestamp;
+  }
+  const removeCodeRequestedAt = (): void => {
+    localStorage.removeItem('code_requested_at');
+  }
+
+  /**
+   * Check is request verification code available
+   */
+  const checkIsRequestCodeAvailable = (): boolean => {
+    const codeRequestedAt = getCodeRequestedAt();
+    if (codeRequestedAt) {
+      const seconds = getPassedSecondsFromTS(parseInt(codeRequestedAt))
+      console.log(seconds)
+      return (seconds > codeInput.timeout);
+    }
+    return true;
+  }
+
   /**
    * Request Sms Code
    */
   const requestSmsCode = async () => {
     form.loading = true;
+    const isAvailable = checkIsRequestCodeAvailable();
+    if (!isAvailable)
+      return;
+
     try {
       await authApi.getCsrfCookie();
       const prefix = form.prefix.prefix;
       await authApi.requestSmsCode(prefix, form.phone);
+
+      // Set next step, set verification code TS
       form.is_phone_valid = true;
+      setCodeRequestedAt();
+      codeInput.visible = false;
+      form.errors = {};
     }
     catch (error: any) {
       form.errors = error.response?.data || {};
@@ -72,7 +118,11 @@
       await authApi.getCsrfCookie();
       const prefix = form.prefix.prefix;
       await authApi.validatePhone(prefix, form.phone, form.validation_code);
+
+      // Set next step, clean verification code TS
       form.is_phone_verified = true;
+      removeCodeRequestedAt();
+      form.errors = {};
     }
     catch (error: any) {
       form.errors = error.response?.data || {};
@@ -140,6 +190,7 @@
   }
 
   onMount(async () => {
+    codeInput.visible = checkIsRequestCodeAvailable();
     await loadInititalData();
   })
 </script>
@@ -183,7 +234,7 @@
               class="ml-4 w-full tracking-widest"
               type="tel"
               max={form.prefix?.length || 9}
-              placeholder="XXX XXX XXXX"
+              placeholder={phonePlaceholder}
               inputmode="numeric"
               required
               on:input={e => onPhoneInput(e)}
@@ -196,12 +247,27 @@
               {$_('validation.phone_registred')}
             </ValidationError>
           {/if}
+          {#if form.errors?.trottling}
+            <ValidationError>
+              {$_('validation.trottling')}
+            </ValidationError>
+          {/if}
         </div>
 
-        <div>
+        <div class="text-center">
+          {#if !codeInput.visible}
+            <div  class="pb-8 text-sm">
+              <ResendCodeCountdown
+                seconds={30}
+                class="font-semibold text-gray-500"
+                on:completed={() => codeInput.visible = true}
+              />
+            </div>
+          {/if}
+
           <Button
             block
-            disabled={!isPhoneValid}
+            disabled={!isPhoneValid || !codeInput.visible}
             on:click={requestSmsCode}
             variant={isPhoneValid ? 'primary' : 'default'}
           >
@@ -223,9 +289,19 @@
           </div>
         </div>
 
-        <div>
-          <div class="ms-link pb-6 text-center text-sm">
-            {$_('pages.signup.resend_code')}
+        <div class="text-center">
+          <div class="pb-8 text-sm">
+            {#if codeInput.visible}
+              <button class="ms-link" on:click={requestSmsCode}>
+                {$_('pages.signup.resend_code')}
+              </button>
+            {:else}
+              <ResendCodeCountdown
+                seconds={30}
+                class="font-semibold text-gray-500"
+                on:completed={() => codeInput.visible = true}
+              />
+            {/if}
           </div>
 
           <Button

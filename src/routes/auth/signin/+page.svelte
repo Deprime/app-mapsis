@@ -8,7 +8,7 @@
   import { Header, PolicyFooter } from '$lib/components/structure';
 
   // Services
-  import { checkPhoneNumberLenght } from '$lib/helpers/phone';
+  import { checkPhoneNumberLenght, generatePhonePlaceholde } from '$lib/helpers/phone';
   import { authApi } from '$lib/api';
   import { userStore, dictionaryStore } from '$lib/stores';
 
@@ -30,6 +30,8 @@
 
   // Reactive
   $: isPhoneValid = checkPhoneNumberLenght(form.phone, form.prefix?.length);
+  $: phonePlaceholder = form.prefix?.length ? generatePhonePlaceholde(form.prefix.length) : ""
+
 
   // Methods
   /**
@@ -119,7 +121,7 @@
         class="ml-4 w-full tracking-widest"
         type="tel"
         max={form.prefix?.length || 9}
-        placeholder="XXX XXX XXXX"
+        placeholder={phonePlaceholder}
         inputmode="numeric"
         required
         on:input={e => onPhoneInput(e)}
