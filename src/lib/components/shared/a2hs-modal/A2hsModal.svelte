@@ -13,7 +13,7 @@
   /**
    * Is app standalone
    */
-  const isStandalone = () => {
+  const isStandalone = (): void => {
     const setupOffer = localStorage.getItem('setup_canceled');
     if (!setupOffer) {
       visible = !window.matchMedia('(display-mode: standalone)').matches;
@@ -23,7 +23,7 @@
   /**
    * Capture install event
    */
-  const captureInstallEvent = () => {
+  const captureInstallEvent = (): void => {
     window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault();
       deferredPrompt = e;
@@ -33,7 +33,7 @@
   /**
    * On cancel
    */
-  const onCancel = () => {
+  const onCancel = (): void => {
     visible = false;
     localStorage.setItem('setup_canceled', "true")
   }
@@ -41,7 +41,7 @@
   /**
    * On Add 2 home screen
    */
-  const onInstall = () => {
+  const onInstall = (): void => {
     try {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult: any) => {

@@ -8,6 +8,9 @@
   // Presets
   const events = getEventsAction(current_component);
 
+  // Components
+  import { Loader } from "$lib/components/ui"
+
   // Props
   export let disabled = false;
   export let loading  = false;
@@ -45,4 +48,7 @@
   class={cssClassList}
 >
   <slot />
+  {#if loading}
+    <Loader size="sm" />
+  {/if}
 </button>

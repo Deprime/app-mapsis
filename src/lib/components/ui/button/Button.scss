@@ -1,12 +1,11 @@
 .ms-button {
-  @apply inline-block;
+  @apply relative inline-block;
   @apply font-semibold text-sm text-center;
   @apply py-3 px-5;
   @apply rounded-xl;
   @apply outline-none;
   @apply transition-all duration-200 ease-in-out;
   @apply select-none;
-
 
   // Block state
   &-block {
@@ -63,4 +62,7 @@
     @apply cursor-not-allowed;
   }
 
+  &-loading {
+    @apply text-transparent;
+  }
 }

@@ -1,24 +1,21 @@
 .ms-loader,
 .ms-loader::after,
 .ms-loader::before {
-  position: absolute;
-  left: 0;
-  z-index: 11;
+  @apply absolute left-0 z-[11];
 }
 
 .ms-loader {
-  text-align: center;
   --loader-size: 40px;
   --loader-border: 4px;
-  top: 50%;
-  left: 50%;
+  @apply text-center;
+  @apply left-1/2;
+  top: calc(50% + var(--loader-border)/2);
   transform: translate(-50%, -50%);
 
   &::after,
   &::before {
     content: '';
-    border-radius: 50%;
-    border-style: solid;
+    @apply rounded-full border-solid;
   }
 
   &::before {
@@ -59,10 +56,5 @@
 }
 
 .ms-loader-overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+  @apply absolute inset-0 z-[10];
 }

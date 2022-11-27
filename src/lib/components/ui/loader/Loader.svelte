@@ -4,7 +4,7 @@
   // Props
   export let hasOverlay   = false;
   export let overlayColor = "rgba(255, 255, 255, 0.5)";
-  export let size = 'md';
+  export let size: 'sm' | 'md' = 'md';
 
   $: cssClassList = getCssClassList(size);
 
