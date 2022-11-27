@@ -1,38 +1,45 @@
-# create-svelte
+# Mapsis - a marketplace app for everything
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Summary info
 
-## Creating a project
+### Under the hood
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Svelte & SvelteKit
+- TypeScript
+- Tailwind
+- multilingual support (i18n)
+- PWA
+- mobile first
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Integrations
 
-# create a new project in my-app
-npm create svelte@latest my-app
+- [x] MapBox
+- [x] Algolia search
+- [x] Flashcalls
+- [ ]  Analitics
+- [ ]  Payments
+- [ ]  Messenger API
+- [ ]  Mailer API
+
+## Setup
+
+- Install dependencies
+
+```terminal
+npm i
 ```
 
-## Developing
+- make a copy of ``.env.sample`` and rename it to ``.env``
+- setup your ``VITE_${VAR}`` values
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To lunch dev mode:
 
-```bash
+```terminal
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+To build  project for production:
 
-To create a production version of your app:
-
-```bash
+```terminal
 npm run build
 ```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
