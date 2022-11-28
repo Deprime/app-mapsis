@@ -10,12 +10,13 @@ const config = {
 
 	kit: {
 		adapter: static_adapter({
-			pages: 'build',
-			assets: 'build',
+			pages: 'public_html',
+			assets: 'public_html',
 			fallback: 'index.html',
 			precompress: false
 		}),
-	}
+    // outDir: "/public_html",
+	},
 };
 
 export default config;
