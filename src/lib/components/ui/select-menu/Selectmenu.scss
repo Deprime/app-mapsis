@@ -1,0 +1,75 @@
+.select-menu-wrapper {
+  @apply flex flex-col justify-end;
+  @apply p-3 pb-5;
+  @apply bg-black/40 backdrop-blur-sm;
+  @apply fixed z-20 inset-0;
+  @apply h-screen max-h-screen;
+}
+
+.select-menu {
+  @apply mx-auto w-full max-w-[600px];
+  @apply flex flex-col;
+  @apply rounded-xl;
+  @apply overflow-y-scroll;
+
+  .select-menu-item {
+    @apply border-b border-solid border-b-gray-100;
+
+    &:first-child {
+      @apply rounded-t-2xl;
+    }
+
+    &:last-child {
+      @apply rounded-b-2xl;
+      @apply border-b-transparent;
+    }
+  }
+}
+
+.select-menu-item {
+  @apply flex flex-row w-full;
+  @apply bg-white;
+  @apply font-medium text-sm;
+  @apply py-3 px-4 pl-6;
+  @apply relative;
+
+  &::after {
+    content: " ";
+    @apply opacity-0;
+    @apply absolute top-[calc(50%-3px)] left-1;
+    @apply flex flex-shrink;
+    @apply w-1.5 h-1.5 rounded-full;
+    @apply bg-blue-600;
+    @apply transition-all;
+  }
+
+  &--selected {
+    &::after {
+      @apply left-2.5;
+      @apply opacity-70;
+    }
+  }
+}
+
+.select-menu-footer {
+  @apply w-full pt-5;
+  @apply flex flex-row;
+  @apply justify-around;
+  @apply space-x-3;
+}
+
+.select-button {
+  @apply bg-white;
+  @apply flex flex-row items-center space-x-3;
+  @apply mx-auto;
+  @apply font-medium text-sm;
+  @apply px-3 py-2 rounded-xl;
+
+  .empty-value {
+    @apply text-gray-500;
+  }
+
+  .chevron {
+    @apply text-gray-600;
+  }
+}

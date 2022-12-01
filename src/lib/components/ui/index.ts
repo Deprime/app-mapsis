@@ -4,6 +4,8 @@ export { default as Input }           from "./input/Input.svelte";
 export { default as CodeInput }       from "./code-input/CodeInput.svelte";
 export { default as Textarea }        from "./textarea/Textarea.svelte";
 export { default as Select }          from "./select/Select.svelte";
+export { default as SelectMenu }      from "./select-menu/SelectMenu.svelte";
+export { default as SelectMenuItem }  from "./select-menu/SelectMenuItem.svelte";
 export { default as Checkbox }        from "./checkbox/Checkbox.svelte";
 export { default as Chips }           from "./chips/Chips.svelte";
 export { default as Radio }           from "./radio/Radio.svelte";

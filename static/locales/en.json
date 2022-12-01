@@ -23,7 +23,8 @@
     "lets_go": "Let's go",
     "logout": "Logout",
     "logout_form_app": "Logout from app",
-    "show_on_map": "Show on map"
+    "show_on_map": "Show on map",
+    "select_value": "Select a value"
   },
   "attrs": {
     "not_required": "Not required",

@@ -15,7 +15,6 @@ const config = {
 			fallback: 'index.html',
 			precompress: false
 		}),
-    // outDir: "/public_html",
 	},
 };
 

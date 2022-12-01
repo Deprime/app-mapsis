@@ -15,17 +15,17 @@
   // Variants
   &-default {
     @apply bg-[#F0EBE3];
-    @apply text-[#8C8E94];
+    @apply text-gray-600;
 
     &:hover,
     &:active {
       @apply bg-[#F3E8D8];
-      @apply text-[#8C8E94];
+      @apply text-gray-600;
     }
 
     &.ms-button-disabled {
       @apply bg-[#EBEBEB];
-      @apply text-[#8C8E94];
+      @apply text-gray-400;
     }
   }
 

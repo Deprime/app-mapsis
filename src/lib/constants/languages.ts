@@ -12,12 +12,13 @@ export const LANGUAGE_LIST = [
     native_title: 'Русский',
     icon: 'ru.svg',
   },
-  // {
-  //   locale: 'es',
-  //   title: 'Spanish',
-  //   native_title: 'Español',
-  //   icon: 'es.svg',
-  // }, {
+  {
+    locale: 'es',
+    title: 'Spanish',
+    native_title: 'Español',
+    icon: 'es.svg',
+  },
+  //  {
   //   locale: 'de',
   //   title: 'German',
   //   native_title: 'Deutsche',

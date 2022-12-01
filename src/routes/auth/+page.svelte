@@ -4,7 +4,7 @@
   import { goto } from '$app/navigation';
   import { _ } from '$lib/config/i18n';
 
-  import { Button } from '$lib/components/ui';
+  import { Button, SelectMenu } from '$lib/components/ui';
   import { LanguageSelect } from '$lib/components/shared';
 
   const APP_NAME = import.meta.env.VITE_APP_NAME;
@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Authentication</title>
 </svelte:head>
 
 <div class="page ms-h-screen flex flex-col justify-between px-4">
@@ -38,8 +38,8 @@
       <p class="text-sm font-semibold mb-8">
         {@html $_('app.intro')}
       </p>
-      <div class="mx-auto w-48">
-        <LanguageSelect />
+      <div>
+        <LanguageSelect  />
       </div>
     </div>
 

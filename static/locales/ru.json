@@ -23,7 +23,8 @@
     "lets_go": "Поехали",
     "logout": "Выйти",
     "logout_form_app": "Выйти из приложения",
-    "show_on_map": "Показать на карте"
+    "show_on_map": "Показать на карте",
+    "select_value": "Выберите значение"
   },
   "attrs": {
     "not_required": "Не обязательно",
