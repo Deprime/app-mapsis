@@ -16,7 +16,9 @@
     @apply text-sm text-gray-500 font-semibold;
   }
 
-  .image-wrapper, img {
+  .image-wrapper,
+  .image-overlay,
+  img {
     @apply rounded-lg;
   }
 
@@ -26,5 +28,10 @@
       @apply px-1.5 py-0.5 rounded-md;
       @apply text-xs text-white bg-slate-900/70;
     }
+  }
+
+  .image-overlay {
+    @apply absolute inset-0;
+    @apply z-[2];
   }
 }

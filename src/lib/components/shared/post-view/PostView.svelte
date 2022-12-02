@@ -65,9 +65,17 @@
       {#if active_photo === index}
         <div
           transition:fade={slideTransition}
-          class="post-slider-item"
+          class="post-slider-item bg-slate-300"
           style={`background-image: url("${CDN_URL}/${photo.url}")`}
-        ></div>
+        >
+
+        <div class="post-slider-item__blur" />
+        <img
+          src={`${CDN_URL}/${photo.url}`}
+          alt={post.title}
+          class="post-slider-item__image"
+        >
+        </div>
       {/if}
     {/each}
 
@@ -118,7 +126,6 @@
       Telegram
     </button>
   </footer>
-
 </section>
 
 <style lang="scss">
@@ -135,14 +142,14 @@
     }
 
     &-dots {
-      @apply absolute left-4 right-4 bottom-3;
+      @apply absolute left-4 right-4 bottom-3 z-10;
       @apply flex flex-row space-x-1;
 
       div {
         @apply rounded-lg;
         @apply h-1 w-full;
         @apply bg-orange-50/70;
-        @apply transition-colors;
+        @apply transition-all;
 
         &.active {
           background: linear-gradient(93.87deg, #FF5F6D -10.04%, #FFC371 103.84%);
@@ -153,6 +160,19 @@
     &-item {
       @apply h-[340px];
       @apply bg-no-repeat bg-cover bg-center;
+      @apply relative;
+      @apply flex flex-col items-center justify-center;
+
+      &__blur {
+        @apply absolute inset-0 z-[1];
+        @apply backdrop-blur-md bg-white/30 rounded-b-lg;
+      }
+
+      &__image {
+        @apply relative z-[3];
+        @apply h-auto w-auto;
+        @apply max-h-full max-w-full;
+      }
     }
   }
 
