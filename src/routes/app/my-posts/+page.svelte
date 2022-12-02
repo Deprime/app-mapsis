@@ -5,8 +5,9 @@
 
   // Components
   import { Button } from '$lib/components/ui';
-  import { PostCard } from '$lib/components/shared';
+  import { PostCard, PostCardSkeleton } from '$lib/components/shared';
 
+  // Services
   import { postApi } from '$lib/api';
 
   // Data
@@ -15,9 +16,25 @@
 
   // Methods
   /**
-   *
+   * Get post list
    */
-  const onCreateClick = () => {
+  const getPostList = async () => {
+    try {
+      const response = await postApi.list();
+      posts = response.data.post_list;
+    }
+    catch(error) {
+      throw new Error(error);
+    }
+    finally {
+      loading = false;
+    }
+  }
+
+  /**
+   * On Create
+   */
+  const onCreate = () => {
     goto(`/app/my-posts/editor`)
   }
 
@@ -37,17 +54,8 @@
     goto(`/app/my-posts/${postId}`);
   }
 
-  onMount(async () => {
-    try {
-      const response = await postApi.list();
-      posts = response.data.post_list;
-    }
-    catch(error) {
-      throw new Error(error);
-    }
-    finally {
-      loading = false;
-    }
+  onMount(() => {
+    getPostList();
   });
 </script>
 
@@ -63,24 +71,29 @@
       {$_('pages.my_posts.title')}
     </h3>
   </header>
-  {#if !loading}
-    <section class="space-y-3">
+  <section class="space-y-3">
+   {#if loading}
+      {#each [...Array(3)] as _el}
+        <PostCardSkeleton />
+      {/each}
+   {:else}
       {#each posts as post}
         <PostCard
           {post}
           editable
+          showStatus
           on:view={onView}
           on:edit={onEdit}
         />
       {/each}
-    </section>
-  {/if}
+    {/if}
+  </section>
 
   <div class="fixed bottom-16 w-full z-30 px-4 pb-4">
     <Button
       block
       variant="primary"
-      on:click={onCreateClick}
+      on:click={onCreate}
     >
       {$_('actions.create_post')}
     </Button>

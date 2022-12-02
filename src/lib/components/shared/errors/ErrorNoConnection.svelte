@@ -1,6 +1,10 @@
 <script lang="ts">
   // Components
   import { Button } from "$lib/components/ui";
+
+  const refreshPage = () => {
+    window.location.reload();
+  }
 </script>
 
 <section class="error-page ms-h-screen ms-bg-peach">
@@ -12,7 +16,7 @@
       Please check your internet connection
     </p>
 
-    <Button variant="primary" class="!px-8">
+    <Button variant="primary" class="!px-8" on:click={refreshPage}>
       Refresh page
     </Button>
   </div>

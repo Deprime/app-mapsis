@@ -13,6 +13,7 @@
   export let post;
   export let viewable = true;
   export let editable = false;
+  export let showStatus = false;
 
   // Data
   const dispatch = createEventDispatcher();
@@ -63,6 +64,12 @@
       alt={post.title}
       class="post-card--poster__image"
     >
+
+    {#if showStatus && post.status?.mui_key}
+      <span class="post-card--poster__status">
+        {$_(`status.${post.status.mui_key}`, {default: post.status.title})}
+      </span>
+    {/if}
   </figure>
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -78,7 +85,10 @@
   </p>
 
   {#if post.address?.length > 5}
-    <div class="post-card--address">
+    <div
+      class="post-card--address"
+      class:pr-10={editable}
+    >
       {post.address}
     </div>
   {/if}
@@ -110,6 +120,15 @@
       &__image {
         @apply h-40;
         @apply relative z-20;
+      }
+
+      &__status {
+        @apply absolute bottom-2 left-2 z-[20];
+        @apply bg-gray-600/70;
+        @apply flex;
+        @apply px-2 py-0.5;
+        @apply rounded-md;
+        @apply text-xs text-white font-medium;
       }
     }
 

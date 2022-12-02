@@ -6,15 +6,14 @@
 
   // Components
   import { Loader } from '$lib/components/ui';
-  import CategoryStep from './_copmonents/CategoryStep.svelte';
-  import InfoStep from './_copmonents/InfoStep.svelte';
-  import PhotoStep from './_copmonents/PhotoStep.svelte';
-  import PreviewStep from './_copmonents/PreviewStep.svelte';
+  import CategoryStep from './_copmonents/category-step/CategoryStep.svelte';
+  import InfoStep from './_copmonents/info-step/InfoStep.svelte';
+  import PhotoStep from './_copmonents/photo-step/PhotoStep.svelte';
+  import PreviewStep from './_copmonents/preview-step/PreviewStep.svelte';
 
   // Services
   import {
     postApi,
-    photoApi,
     dictionaryApi
   } from '$lib/api';
   import { mapStore } from '$lib/stores';
@@ -50,10 +49,6 @@
    * Got to step
    */
   const gotoStep = async (stepNumber: number) => {
-    // Photos
-    if (stepNumber === 3) {
-      await getPhotoList();
-    }
     step = stepNumber;
   }
 
@@ -100,19 +95,6 @@
     }
     finally {
       loading = false;
-    }
-  }
-
-  /**
-   * Get photo list
-   */
-  const getPhotoList = async () => {
-    try {
-      const response = await photoApi.list(post.id);
-      photo_list = response.data;
-    }
-    catch (error) {
-      throw new Error(error);
     }
   }
 

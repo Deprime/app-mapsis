@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	// import { quintOut } from 'svelte/easing';
   import { swipe, Hammer } from 'svelte-hammer';
   import { _ } from '$lib/config/i18n';
 
@@ -29,7 +29,7 @@
   /**
   * On swipe down
   */
-  const onSwipeLeft = (e) => {
+  const onSwipeLeft = () => {
     if (total_photo > 1) {
       const last_index = total_photo - 1;
       const next_index = active_photo + 1;
@@ -40,7 +40,10 @@
     return;
   }
 
-  const onSwipeRight = (e) => {
+  /**
+   * On swipe right
+   */
+  const onSwipeRight = () => {
     if (total_photo > 1) {
       const last_index = total_photo - 1;
       active_photo = (active_photo === 0)
@@ -115,6 +118,7 @@
       Telegram
     </button>
   </footer>
+
 </section>
 
 <style lang="scss">

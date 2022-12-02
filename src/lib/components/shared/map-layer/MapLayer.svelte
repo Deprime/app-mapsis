@@ -42,7 +42,7 @@
   const onMarkerClick = (marker) => {
     if (marker.id) {
       const mapZoom = map.getMap().getZoom();
-      console.log(map.getMap())
+      // console.log(map.getMap())
       // map.flyTo({center: [
       //   marker.coords[1],
       //   marker.coords[0] + ((marker.coords[0] * 0.03 / mapZoom) / mapZoom),
@@ -54,7 +54,7 @@
     }
   }
 
-  const eventHandler = (e) => {
+  const eventHandler = (e): void => {
     const data = e.detail;
   }
 
@@ -63,6 +63,13 @@
    */
   const onRecentre = (e) => {
     // console.log(e.detail.center.lat, e.detail.center.lng);
+  }
+
+  /**
+   * On map layer ready
+   */
+  const onReady = (): void => {
+    dispatch('ready');
   }
 
   onMount(() => {
@@ -115,6 +122,7 @@
       accessToken={MAPBOX_APIKEY}
       options={{ scrollZoom: false }}
       on:recentre={e => onRecentre(e) }
+      on:ready={onReady}
       bind:this={map}
     >
       {#each markers as mark }
@@ -143,7 +151,7 @@
 <style lang="scss">
   :global(.map-layer .mapboxgl-map) {
     @apply w-full;
-    height: calc(100vh - 120px) !important;
+    @apply h-[calc(100vh-120px)];
   }
   :global(.mapboxgl-ctrl-logo) {
     @apply invisible hidden h-0 w-0;
@@ -153,16 +161,6 @@
 
   :global(.mapboxgl-ctrl-bottom-left) {
     @apply relative;
-
-    // .mapboxgl-ctrl {
-    //   @apply relative z-10
-    // }
-    // &:after {
-    //   content: " ";
-    //   height: 29px !important;
-    //   @apply block relative inset-0 z-20;
-    //   @apply bg-gray-300
-    // }
   }
   :global(.mapboxgl-ctrl-bottom-right) {
     @apply invisible hidden h-0 w-0;

@@ -77,5 +77,5 @@
 </section>
 
 <style lang="scss">
-  @import './style.scss';
+  @import '../style.scss';
 </style>

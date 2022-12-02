@@ -3,31 +3,24 @@
   import { _ } from '$lib/config/i18n';
 
   // Components
+  import { Loader } from '$lib/components/ui';
   import { MapLayer, PostCard } from '$lib/components/shared';
   import FiltersOverlay from './_components/FiltersOverlay.svelte';
   import CardPreview from './_components/CardPreview.svelte';
 
   // Services
-  import { userStore, mapStore } from '$lib/stores';
+  import { mapStore } from '$lib/stores';
   import { mapService } from '$lib/services';
   import { COORDS_UBUD } from '$lib/constants/map';
-  import { searchApi, dictionaryApi } from '$lib/api';
-
-
+  import { searchApi } from '$lib/api';
 
   // Data
   let coords = COORDS_UBUD;
   let loading = true;
+  let mapLoading = true;
   const filters = {
     active: false,
-    categoryList: [
-    // {id: 1, title: "Все категории"},
-    {id: 0, title: "Знакомства"},
-    {id: 1, title: "Развлечения"},
-    {id: 2, title: "Поездки"},
-    {id: 3, title: "Тусовка"},
-    {id: 4, title: "Медитация"},
-  ]};
+  };
 
   let markers = [];
   let hash = crypto.randomUUID();
@@ -38,15 +31,6 @@
   }
 
   // Methods
-  /**
-   * Get random int
-   */
-  const getRandomInt =(min: number, max: number): number => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
   /**
    * On filter change
    */
@@ -66,38 +50,6 @@
   }
 
   /**
-   * Demo data generator
-   */
-  const generateDemoData = () => {
-    pos = $userStore.data?.position;
-    coords = (pos && pos?.latitude && pos?.longitude) ? [pos.latitude, pos.longitude] : coords;
-
-    const demoMarkers = [];
-    for (let i = 1; i <= 30; i++) {
-      let latSign = getRandomInt(1, 10) > 5 ? 1 : -1;
-      let lonSign = getRandomInt(1, 10) > 5 ? 1 : -1;
-
-      let lat = coords[0] + (getRandomInt(1, 20) / 200 * latSign);
-      let lon = coords[1] + (getRandomInt(1, 20) / 200 * lonSign);
-      let title  = `Random event ${i}`;
-      let userId = i; // getRandomInt(1, 10);
-
-      const categoryIndex = getRandomInt(0, filters.categoryList.length - 1);
-      demoMarkers.push({
-        id: i,
-        coords: [lat, lon],
-        title,
-        user: {
-          id: userId,
-        },
-        promoted: [3,10,16,23].includes(i),
-        category: {...filters.categoryList[categoryIndex]},
-      });
-    }
-    return demoMarkers;
-  }
-
-  /**
    * On marker click
    */
   const onMarkerClick = (e) => {
@@ -105,8 +57,14 @@
     preview.visible = true;
   }
 
-  onMount(async () => {
+  /**
+   * On map layer ready
+   */
+  const onMapReady = () => {
+    mapLoading = false;
+  }
 
+  onMount(async () => {
     const currentPostition = $mapStore.data.center;
     coords = (currentPostition && currentPostition?.lat && currentPostition?.lng)
       ? [currentPostition.lat, currentPostition.lng]
@@ -145,19 +103,23 @@
 <div class="page-map">
   <FiltersOverlay
     isActive={filters.active}
-    categoires={filters.categoryList}
     eventCount={markers.length}
     on:filterSelect={onFilterSelect}
     on:toggle={onToggleFilters}
   />
 
-  <div class="relative z-10">
+  <div class="map-wrapper">
+    {#if mapLoading}
+      <Loader hasOverlay />
+    {/if}
+
     {#if !loading}
       <MapLayer
         {markers}
         coords={mapStore.getData('center')}
         zoom={mapStore.getData('zoom')}
         on:markerClick={onMarkerClick}
+        on:ready={onMapReady}
       />
     {/if}
   </div>
@@ -168,3 +130,11 @@
     </CardPreview>
   {/if}
 </div>
+
+<style lang="scss">
+  .map-wrapper {
+    @apply w-full;
+    @apply relative z-10;
+    @apply h-[calc(100vh-120px)];
+  }
+</style>

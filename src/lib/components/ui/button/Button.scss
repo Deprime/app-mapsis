@@ -63,6 +63,6 @@
   }
 
   &-loading {
-    @apply text-transparent;
+    color: transparent !important;
   }
 }

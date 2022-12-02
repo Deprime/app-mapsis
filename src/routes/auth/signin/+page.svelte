@@ -154,7 +154,8 @@
     <Button
       variant="primary"
       block
-      disabled={!isPhoneValid || form.password.length < 6}
+      disabled={!isPhoneValid || form.password.length < 6 || form.loading}
+      loading={form.loading}
       on:click={signin}
     >
       {$_('actions.continue')}

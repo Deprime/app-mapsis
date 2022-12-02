@@ -1,4 +1,7 @@
 <script lang="ts">
+  import '../style.scss';
+  import './PhotoStep.scss';
+
   import { createEventDispatcher, onMount } from 'svelte';
   import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
@@ -20,6 +23,7 @@
 
   // Data
   let uploading = false;
+  let max_size = 10485760;
   let photos: any;
   let errors = {};
   let inputFileHidden: HTMLInputElement;
@@ -35,11 +39,12 @@
   /**
    * Load photo list
    */
-  const loadPhotos = async (post_id: number) => {
+  const loadPhotos = async (postId: number) => {
     loading = true;
     try {
-      const response = await photoApi.list(post_id);
-      photo_list = response.data;
+      const response = await photoApi.list(postId);
+      photo_list = response.data.photos;
+      max_size = response.data.max_size;
     }
     catch (error: any) {
       errors = error.response?.data || {};
@@ -126,14 +131,14 @@
    */
   const getNativeArrayFromFileList = (file_list: any) => Object.values(file_list);
 
-
-  onMount(() => {
-    if (window.File && window.FileReader && window.FormData) {
-      console.log('File uploading is supported');
-    }
-    else {
-      alert('File uploading is NOT supported for your browser');
-    }
+  onMount(async () => {
+    await loadPhotos(post_id);
+    // if (window.File && window.FileReader && window.FormData) {
+    //   console.log('File uploading is supported');
+    // }
+    // else {
+    //   alert('File uploading is NOT supported for your browser');
+    // }
   })
 </script>
 
@@ -150,9 +155,7 @@
 
   <div class="gallery pt-2 pb-24">
     {#each photo_list as photo, index}
-      <div class="gallery-item">
-        <PhotoItem {photo} {loading}/>
-      </div>
+      <PhotoItem {photo} />
     {/each}
 
     {#if uploading}
@@ -200,25 +203,3 @@
     </div>
   {/if}
 </section>
-
-<style lang="scss">
-  @import './style.scss';
-
-  .gallery {
-    @apply px-4 grid grid-cols-2 gap-4;
-
-    &-item {
-      @apply flex flex-col items-center justify-center;
-      @apply rounded-lg bg-white;
-      @apply py-6 h-[120px] overflow-y-hidden;
-
-      .gallery-item--icon {
-        @apply rounded-full p-1 mb-4;
-        @apply text-white bg-gray-400;
-      }
-      p {
-        @apply text-sm text-gray-500 font-semibold;
-      }
-    }
-  }
-</style>

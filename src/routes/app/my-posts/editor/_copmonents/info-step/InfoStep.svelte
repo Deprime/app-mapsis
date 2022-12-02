@@ -10,7 +10,7 @@
   import { MapPointSelector } from '$lib/components/shared';
 
   // Props
-  // export let loading = false;
+  export let loading = false;
   export let title: string;
   export let description: string;
   export let address: string;
@@ -122,6 +122,8 @@
       <Button
         block
         variant="primary"
+        {loading}
+        disabled={loading}
         on:click={() => { dispatch('nextStep') }}
       >
         {$_('actions.continue')}
@@ -131,5 +133,5 @@
 </section>
 
 <style lang="scss">
-  @import './style.scss';
+  @import '../style.scss';
 </style>
