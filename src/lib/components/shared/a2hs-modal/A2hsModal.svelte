@@ -50,12 +50,15 @@
     //   throw new Error(error);
     // }
 
-    AddToHomeScreen();
   }
 
   onMount(async () => {
     isStandalone();
+
+    AddToHomeScreen();
+
   });
+  AddToHomeScreen();
 </script>
 
 <Modal {visible} faderClosable={false}>
