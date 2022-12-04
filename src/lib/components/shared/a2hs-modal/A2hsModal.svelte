@@ -34,6 +34,8 @@
    * On Add 2 home screen
    */
   const onInstall = (): void => {
+    alert(deferredPrompt);
+
     try {
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult: any) => {
