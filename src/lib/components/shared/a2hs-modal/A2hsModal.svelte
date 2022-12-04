@@ -23,16 +23,6 @@
   }
 
   /**
-   * Capture install event
-   */
-  const captureInstallEvent = (): void => {
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-  }
-
-  /**
    * On cancel
    */
   const onCancel = (): void => {
@@ -59,8 +49,12 @@
   }
 
   onMount(async () => {
-    captureInstallEvent();
     isStandalone();
+  });
+
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
   });
 </script>
 
