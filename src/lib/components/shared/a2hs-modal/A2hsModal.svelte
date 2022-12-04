@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { _ }  from '$lib/config/i18n';
+  import AddToHomeScreen from "a2hs.js";
 
   // Components
   import { Modal, Button } from "$lib/components/ui";
@@ -34,29 +35,26 @@
    * On Add 2 home screen
    */
   const onInstall = (): void => {
-    alert(deferredPrompt);
+    // alert(deferredPrompt);
 
-    try {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult: any) => {
-        if (choiceResult.outcome === 'accepted') {
-          // Add analyticcs event
-        }
-        deferredPrompt = null;
-      });
-    }
-    catch (error: any) {
-      throw new Error(error);
-    }
+    // try {
+    //   deferredPrompt.prompt();
+    //   deferredPrompt.userChoice.then((choiceResult: any) => {
+    //     if (choiceResult.outcome === 'accepted') {
+    //       // Add analyticcs event
+    //     }
+    //     deferredPrompt = null;
+    //   });
+    // }
+    // catch (error: any) {
+    //   throw new Error(error);
+    // }
+
+    AddToHomeScreen();
   }
 
   onMount(async () => {
     isStandalone();
-  });
-
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    deferredPrompt = e;
   });
 </script>
 
