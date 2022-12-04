@@ -7,6 +7,7 @@
 
   // Data
   let deferredPrompt: any;
+  let installButton;
   let visible = false;
 
   // Methods
@@ -14,7 +15,8 @@
    * Is app standalone
    */
   const isStandalone = (): void => {
-    const setupOffer = localStorage.getItem('setup_canceled');
+    // const setupOffer = localStorage.getItem('setup_canceled');
+    const setupOffer = false;
     if (!setupOffer) {
       visible = !window.matchMedia('(display-mode: standalone)').matches;
     }
@@ -48,7 +50,7 @@
         if (choiceResult.outcome === 'accepted') {
           // Add analyticcs event
         }
-        deferredPrompt = null
+        deferredPrompt = null;
       });
     }
     catch (error: any) {
@@ -69,17 +71,17 @@
     </h4>
   </header>
 
-  <div slot="body" class="px-2 pb-2 text-sm">
+  <div slot="body" class="px-2 pb-2">
     <div class="text-center pb-10">
       <i class="em em-iphone text-[36px]" aria-label="MOBILE PHONE"></i>
     </div>
-    <p>
+    <p class="text-sm text-center">
       {$_('setup.description')}
     </p>
   </div>
 
   <footer slot="footer" class="flex flex-col space-y-4">
-    <Button block variant="primary" on:click={onInstall}>
+    <Button block variant="primary" on:click={onInstall} bind:this={installButton}>
       {$_('actions.install')}
     </Button>
 

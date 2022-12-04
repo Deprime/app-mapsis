@@ -9,14 +9,25 @@
   import { Button, Input, Textarea } from '$lib/components/ui';
   import { MapPointSelector } from '$lib/components/shared';
 
+  import { appStore } from '$lib/stores';
+
+  import type { ICategory } from '$lib/interfaces';
+
   // Props
   export let loading = false;
+  export let category: ICategory;
   export let title: string;
   export let description: string;
   export let address: string;
   export let price: string;
   export let suggested_address: string;
   export let coords: number[];
+
+  // Reactive
+  $: canGotoNextStep = (title.length > 4
+    && description.length > 4
+    && Number(price) > 0
+  );
 
   // Data
   const dispatch = createEventDispatcher();
@@ -39,7 +50,6 @@
 
   /**
    * On MapSelector close
-   * @param e
    */
   const closeMapSelector = (e) => {
     const { lat, lng } = e.detail;
@@ -72,7 +82,11 @@
 
   <div class="py-4 px-6">
     <p class="font-medium text-sm text-slate-800">
-      {$_('pages.editor.post_info_hint')}
+      {#if category?.id}
+        {$appStore.data?.locale === 'ru' ? category.title_ru : category.title_en}
+      {:else}
+        {$_('pages.editor.post_info_hint')}
+      {/if}
     </p>
   </div>
 
@@ -95,13 +109,9 @@
         placeholder={$_('pages.editor.post_address')}
         bind:value={address}
       />
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <span
-        class="pl-3 pr-1"
-        on:click={openMapSelector}
-      >
+      <button class="pl-3 pr-1" on:click={openMapSelector}>
         <MapIcon size="24" />
-      </span>
+      </button>
     </div>
 
     <Input
@@ -114,11 +124,8 @@
     />
   </div>
 
-  {#if title.length > 4 && description.length > 4}
-    <div
-      class="step-switcher"
-      in:slide={slideTransition}
-    >
+  {#if canGotoNextStep}
+    <div class="step-switcher" in:slide={slideTransition}>
       <Button
         block
         variant="primary"

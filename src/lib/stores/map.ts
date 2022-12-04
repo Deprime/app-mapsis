@@ -2,7 +2,7 @@ import { writable } from 'svelte-local-storage-store';
 import { LATLNG_UBUD, DEFAULT_ZOOM } from '$lib/constants/map';
 
 import type { LatLng, LatLngBounds } from '$lib/types/coords';
-import type { IMapStore } from '$lib/interfaces/IMapStore';
+import type { IMapStore } from '$lib/interfaces/map-store';
 
 const $$map: IMapStore = {
   data: {

@@ -5,29 +5,26 @@
   import { _ } from '$lib/config/i18n';
 
   // Components
-  import { Loader } from '$lib/components/ui';
-  import CategoryStep from './_copmonents/category-step/CategoryStep.svelte';
-  import InfoStep from './_copmonents/info-step/InfoStep.svelte';
-  import PhotoStep from './_copmonents/photo-step/PhotoStep.svelte';
-  import PreviewStep from './_copmonents/preview-step/PreviewStep.svelte';
+  import { Loader }     from '$lib/components/ui';
+  import CategoryStep   from './_copmonents/category-step/CategoryStep.svelte';
+  import InfoStep       from './_copmonents/info-step/InfoStep.svelte';
+  import PhotoStep      from './_copmonents/photo-step/PhotoStep.svelte';
+  import PreviewStep    from './_copmonents/preview-step/PreviewStep.svelte';
 
   // Services
-  import {
-    postApi,
-    dictionaryApi
-  } from '$lib/api';
+  import { postApi, dictionaryApi } from '$lib/api';
   import { mapStore } from '$lib/stores';
 
   // Types
-  import type { IPhoto } from '$lib/interfaces';
+  import type { ICategory, IPhoto, IPost } from '$lib/interfaces';
 
   // Data
-  let step = 1;
+  let step       = 1;
   let preloading = true;
-  let loading = false;
+  let loading    = false;
   const MY_POSTS_URL = '/app/my-posts';
 
-  const post = {
+  const post: IPost = {
     id: null,
     category: null,
     category_id: null,
@@ -42,7 +39,7 @@
     ],
   };
   let photo_list: IPhoto[] = [];
-  let category_list: any[] = [];
+  let category_list: ICategory[] = [];
 
   // Methods
   /**
@@ -52,8 +49,19 @@
     step = stepNumber;
   }
 
+  /**
+   * Goto my posts
+   */
   const gotoMyPosts = () => {
     goto(MY_POSTS_URL)
+  }
+
+  /**
+   * On category change
+   */
+  const onCategoryChange = (category: ICategory) => {
+    post.category_id = category.id;
+    post.category = category;
   }
 
   /**
@@ -118,6 +126,7 @@
     try {
       const response = await postApi.get(post_id);
       const { data } = response;
+      console.log(data)
       Object.keys(data).forEach(key => {
         post[key] = data[key];
       });
@@ -129,7 +138,6 @@
 
   onMount(async () => {
     const post_id = $page.url.searchParams.get("post_id");
-
     await getCategoryList();
     if (post_id) {
       await getPost(parseInt(post_id));
@@ -150,9 +158,9 @@
   {:else}
     {#if step === 1}
       <CategoryStep
-        {loading}
         {category_list}
         bind:category_id={post.category_id}
+        on:change={({detail}) => { onCategoryChange(detail); }}
         on:nextStep={() => {gotoStep(2)}}
         on:back={gotoMyPosts}
       />
@@ -161,6 +169,7 @@
     {#if step === 2}
       <InfoStep
         {loading}
+        category={post.category}
         bind:title={post.title}
         bind:description={post.description}
         bind:price={post.price}

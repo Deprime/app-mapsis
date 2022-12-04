@@ -8,10 +8,11 @@
   import { Button, List, ListItem } from '$lib/components/ui';
   import { XIcon } from 'svelte-feather-icons';
 
+  import type { ICategory } from '$lib/interfaces';
+
   // Props
-  // export let loading = false;
   export let category_id: number|null;
-  export let category_list: any[] = [];
+  export let category_list: ICategory[] = [];
 
   // Data
   const dispatch = createEventDispatcher();
@@ -25,14 +26,22 @@
   /**
    * On category select
    */
-  const onCategorySelect = (category: any) => {
-    category_id = category.id;
+  const onCategorySelect = (category: ICategory) => {
+    dispatch('change', category);
+  }
+
+  const gotoNextStep = (): void => {
+    dispatch('nextStep');
+  }
+
+  const gotoBack = (): void => {
+    dispatch('back');
   }
 </script>
 
 <section class="step step-4 ms-h-screen overflow-y-scroll">
   <header class="p-4 flex flex-row space-x-4 h-[60px] sticky top-0 z-[1] ms-bg-peach">
-    <button on:click={() => { dispatch('back') }}>
+    <button on:click={gotoBack}>
       <XIcon size="24" />
     </button>
 
@@ -41,38 +50,27 @@
     </h4>
   </header>
 
-  <header class="py-4 px-6">
-    <h4 class="font-extrabold text-slate-800">
-      {$_('pages.editor.post_category')}
-    </h4>
-  </header>
+  <h4 class="editor-subtitle my-4 mx-6">
+    {$_('pages.editor.post_category')}
+  </h4>
 
-  <div class="px-4 pb-24">
-    <List>
-      {#each category_list as category }
-        <ListItem
-          selected={(category_id && category.id === category_id)}
-          on:click={() => onCategorySelect(category)}
-        >
-          {category.title_ru}
-        </ListItem>
-      {/each}
-    </List>
-  </div>
+  <List class="mx-4 mb-24">
+    {#each category_list as category }
+      <ListItem
+        selected={category.id === category_id}
+        on:click={() => onCategorySelect(category)}
+      >
+        {category.title_ru}
+      </ListItem>
+    {/each}
+  </List>
 
   {#if category_id}
-    <div
-      class="step-switcher"
-      in:slide={slideTransition}
-    >
-      <Button
-        block
-        variant="primary"
-        on:click={() => { dispatch('nextStep'); }}
-      >
+    <footer class="step-switcher" in:slide={slideTransition}>
+      <Button block variant="primary" on:click={gotoNextStep}>
         {$_('actions.continue')}
       </Button>
-    </div>
+    </footer>
   {/if}
 </section>
 
