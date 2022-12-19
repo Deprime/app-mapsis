@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <footer class="space-y-4 w-full mb-10">
+    <footer class="space-y-4 w-full mb-12">
       <Button block variant="primary" on:click={gotoSignIn}>
         {$_('actions.signin', {default: "Sign in"})}
       </Button>

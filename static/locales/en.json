@@ -24,7 +24,8 @@
     "logout": "Logout",
     "logout_form_app": "Logout from app",
     "show_on_map": "Show on map",
-    "select_value": "Select a value"
+    "select_value": "Select a value",
+    "update_password": "Update password"
   },
   "attrs": {
     "not_required": "Not required",
@@ -137,6 +138,7 @@
       "nav_title": "Profile",
       "title": "Profile",
       "user_data": "Personal data",
+      "contact_data": "Contact details",
       "whats_your_name": "Hi! What's your name?",
       "enter_name": "Enter your name",
       "name": "Name",

@@ -16,6 +16,8 @@
   export let visible = false;
   export let item: ISelectmenuItem|null = null;
   export let placeholder = $_('actions.select_value');
+  export let confirmable = true;
+  export let disabled = false;
 
   // Data
   const dispatch = createEventDispatcher();
@@ -46,17 +48,22 @@
    * Open menu
    */
   const openMenu = (): void => {
-    visible = true;
-    dispatch('open');
+    if (!disabled) {
+      visible = true;
+      dispatch('open');
+    }
   }
 </script>
 
-<button on:click={openMenu}>
+<button on:click={openMenu} {disabled}>
   <slot name="button">
-    <div class="select-button">
+    <div
+      class="select-button"
+      class:select-button--disabled={disabled}
+    >
       <slot name="prefix" />
 
-      <span class:empty-value={!item}>
+      <span class="select-button-label" class:empty-value={!item}>
         {item ? item.label : placeholder}
       </span>
 
@@ -71,11 +78,11 @@
 
 {#if visible}
   <div class="select-menu-wrapper" transition:fade={fadeOption}>
-    <div transition:fly={flyOptions}>
-      <aside class={`select-menu ${$$props.class || ""}`}>
-        <slot />
-      </aside>
+    <aside class={`select-menu ${$$props.class || ""}`} transition:fly={flyOptions}>
+      <slot />
+    </aside>
 
+    {#if confirmable}
       <footer class="select-menu-footer">
         <Button class="!w-full" on:click={onCancel}>
           {$_('actions.cancel')}
@@ -89,6 +96,6 @@
           {$_('actions.confirm')}
         </Button>
       </footer>
-    </div>
+    {/if}
   </div>
 {/if}

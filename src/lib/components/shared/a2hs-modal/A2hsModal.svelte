@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { _ }  from '$lib/config/i18n';
-  import AddToHomeScreen from "a2hs.js";
 
   // Components
   import { Modal, Button } from "$lib/components/ui";
@@ -16,8 +15,8 @@
    * Is app standalone
    */
   const isStandalone = (): void => {
-    // const setupOffer = localStorage.getItem('setup_canceled');
-    const setupOffer = false;
+    const setupOffer = localStorage.getItem('setup_canceled');
+    // const setupOffer = false;
     if (!setupOffer) {
       visible = !window.matchMedia('(display-mode: standalone)').matches;
     }
@@ -35,30 +34,23 @@
    * On Add 2 home screen
    */
   const onInstall = (): void => {
-    // alert(deferredPrompt);
-
-    // try {
-    //   deferredPrompt.prompt();
-    //   deferredPrompt.userChoice.then((choiceResult: any) => {
-    //     if (choiceResult.outcome === 'accepted') {
-    //       // Add analyticcs event
-    //     }
-    //     deferredPrompt = null;
-    //   });
-    // }
-    // catch (error: any) {
-    //   throw new Error(error);
-    // }
-
+    try {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          // Add analyticcs event
+        }
+        deferredPrompt = null;
+      });
+    }
+    catch (error: any) {
+      throw new Error(error);
+    }
   }
 
   onMount(async () => {
-    isStandalone();
-
-    AddToHomeScreen();
-
+    // isStandalone();
   });
-  AddToHomeScreen();
 </script>
 
 <Modal {visible} faderClosable={false}>

@@ -11,7 +11,8 @@
   import Profile  from '$lib/assets/images/nav-icons/profile.svg';
 
   const nav = [
-    {title: 'Search', tag: 'search', link:'/app/map', icon: Search },
+    {title: 'Search', tag: 'search', link:'/app/categories', icon: Search },
+    // {title: 'Search', tag: 'search', link:'/app/map', icon: Search },
     {title: 'Adds', tag: 'posts', link:'/app/my-posts', icon: Posts},
     {title: 'Messenger', tag: 'im', link:'/app/im', icon: Im},
     {title: 'Profile', tag: 'profile', link:'/app/profile', icon: Profile},

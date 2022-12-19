@@ -1,9 +1,12 @@
 .select-menu-wrapper {
   @apply flex flex-col justify-end;
-  @apply p-3 pb-5;
+  @apply flex flex-col;
+  @apply p-3 pb-8;
   @apply bg-black/40 backdrop-blur-sm;
-  @apply fixed z-20 inset-0;
+  @apply fixed z-30 inset-0;
   @apply h-screen max-h-screen;
+  @apply overflow-y-scroll;
+  margin: 0 !important;
 }
 
 .select-menu {
@@ -37,7 +40,7 @@
     content: " ";
     @apply opacity-0;
     @apply absolute top-[calc(50%-3px)] left-1;
-    @apply flex flex-shrink;
+    @apply block;
     @apply w-1.5 h-1.5 rounded-full;
     @apply bg-blue-600;
     @apply transition-all;
@@ -63,7 +66,8 @@
   @apply flex flex-row items-center space-x-3;
   @apply mx-auto;
   @apply font-medium text-sm;
-  @apply px-3 py-2 rounded-xl;
+  @apply pl-3 pr-12 py-[11px] rounded-xl;
+  @apply relative;
 
   .empty-value {
     @apply text-gray-500;
@@ -71,5 +75,14 @@
 
   .chevron {
     @apply text-gray-600;
+    @apply absolute right-3 top-[calc(50%-8px)];
+  }
+
+  &--disabled {
+    @apply text-gray-400;
+
+    .chevron {
+      @apply text-gray-400;
+    }
   }
 }

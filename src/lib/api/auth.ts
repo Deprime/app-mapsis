@@ -24,7 +24,7 @@ const authApi = {
   /**
    * Sign in
    */
-   signin: (email: string, password: string): Promise<any> => {
+  signin: (email: string, password: string): Promise<any> => {
     const url = `${PREFIX}/signin`;
     return $axios.post(url, {email, password})
   },
@@ -40,17 +40,54 @@ const authApi = {
   /**
    * Sign up via email
    */
-  requestSmsCode: (prefix: string, phone: string): Promise<any> => {
-    const url = `${PREFIX}/send-sms-code`;
-    return $axios.post(url, {prefix, phone})
+  requestValidationCode: (prefix: string, phone: string, flag = 'validation'): Promise<any> => {
+    const url = `${PREFIX}/send-validation-code`;
+    const data = {
+      prefix,
+      phone: `${phone}`,
+      flag
+    };
+    return $axios.post(url, {prefix, phone: `${phone}`, flag})
   },
 
   /**
-   * Validate phone
+   * Verify validation code
    */
-  validatePhone: (prefix: string, phone: string, code: string): Promise<any> => {
-    const url = `${PREFIX}/validate-phone`;
-    return $axios.post(url, {prefix, phone, code})
+  verifyValidationCode: (
+    prefix: string,
+    phone: string,
+    code: string,
+    flag = 'validation'
+  ): Promise<any> => {
+    const url = `${PREFIX}/verify-validation-code`;
+    const data = {
+      prefix,
+      phone: `${phone}`,
+      code,
+      flag
+    };
+    return $axios.post(url, data)
+  },
+
+  /**
+   * Change password
+   */
+  restorePassword: (
+      prefix: string,
+      phone: string,
+      code: string,
+      password: string,
+      flag = 'validation'
+  ): Promise<any> => {
+    const url = `${PREFIX}/restore-password`;
+    const data = {
+      prefix,
+      phone: `${phone}`,
+      code,
+      password,
+      flag
+    };
+    return $axios.post(url, data)
   },
 
   /**

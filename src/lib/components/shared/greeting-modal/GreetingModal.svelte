@@ -34,7 +34,8 @@ import { onMount } from 'svelte';
       }
       userApi.updateProfile(data);
       userService.getProfile();
-      goto('/app/map');
+      goto('/app/categories');
+      // goto('/app/map');
     }
     catch (error) {
       throw new Error(error)

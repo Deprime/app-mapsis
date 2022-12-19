@@ -2,10 +2,6 @@
   import { goto } from '$app/navigation';
   import { userStore } from '$lib/stores';
 
-  if ($userStore.token) {
-    goto('/app/map');
-  }
-  else {
-    goto('/auth');
-  }
+  const url = ($userStore.token) ? '/app/categories' : '/auth';
+  goto(url);
 </script>

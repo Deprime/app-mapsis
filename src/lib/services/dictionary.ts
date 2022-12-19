@@ -6,9 +6,8 @@ const dictionaryService = {
    * Get phone prefix list
    */
   getPhonePrefixList: async (): Promise<any> => {
-    dictionaryStore.setLoading(true);
-
     try {
+      dictionaryStore.setLoading(true);
       const request = await dictionaryApi.getPhonePrefixList();
       const prefixes = request.data;
       dictionaryStore.setPrefixes(prefixes)

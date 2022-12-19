@@ -24,7 +24,8 @@
     "logout": "Выйти",
     "logout_form_app": "Выйти из приложения",
     "show_on_map": "Показать на карте",
-    "select_value": "Выберите значение"
+    "select_value": "Выберите значение",
+    "update_password": "Обновить пароль"
   },
   "attrs": {
     "not_required": "Не обязательно",
@@ -137,6 +138,7 @@
       "nav_title": "Профиль",
       "title": "Профиль",
       "user_data": "Персональные данные",
+      "contact_data": "Контактные данные",
       "whats_your_name": "Привет! Как тебя зовут?",
       "enter_name": "Укажите ваше имя",
       "name": "Имя",

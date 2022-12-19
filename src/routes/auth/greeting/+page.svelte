@@ -28,7 +28,8 @@
       email: "",
     };
     userStore.setData(user);
-    goto('/app/map');
+    goto('/app/categories');
+    // goto('/app/map');
   }
 
   /**
@@ -76,6 +77,13 @@
         console.error( "An unknown error occurred." );
         break;
     }
+  }
+
+  /**
+   * Close geo modal
+   */
+  const closeGeoModal = (): void => {
+    geoModal.visible = false;
   }
 
   onMount(() => {
@@ -134,29 +142,29 @@
 </div>
 
 <Modal bind:visible={geoModal.visible}>
-  <svelte:fragment slot="header">
+  <header slot="header">
     <h3 class="text-center mb-2">
       Mapsis хочет использовать вашу геопозицию
     </h3>
     <p class="text-center text-sm mb-4">
       Нам нужно знать ваше местоположение, чтобы приложение работало корректно
     </p>
-  </svelte:fragment>
+  </header>
 
-  <svelte:fragment slot="footer">
+  <footer slot="footer">
     <Button
       block
       class="mb-4"
-      on:click={() => {geoModal.visible = false}}
+      on:click={closeGeoModal}
     >
       Разрешать всегда
     </Button>
     <Button
       block
-      on:click={() => {geoModal.visible = false}}
+      on:click={closeGeoModal}
     >
       Запретить
     </Button>
-  </svelte:fragment>
+  </footer>
 </Modal>
 

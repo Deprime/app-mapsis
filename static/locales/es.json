@@ -25,7 +25,8 @@
     "logout": "Logout",
     "logout_form_app": "Logout from app",
     "show_on_map": "Show on map",
-    "select_value": "Select a value"
+    "select_value": "Select a value",
+    "update_password": "Update password"
   },
   "attrs": {
     "not_required": "Not required",

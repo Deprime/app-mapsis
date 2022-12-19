@@ -67,6 +67,7 @@
   {value}
   on:input={onInput}
   bind:this={ref}
+  {disabled}
   class={cssClassList}
 />
 

@@ -2,6 +2,9 @@
   import { slide } from 'svelte/transition';
 	import { quintOut } from 'svelte/easing';
 
+  // Props
+  export let errorList: string[]|[] = [];
+
   // Data
   const slideConfig = {
     delay: 250,
@@ -11,7 +14,13 @@
 </script>
 
 <p class="validation-error" transition:slide={slideConfig}>
-  <slot />
+  <slot>
+    {#each errorList as err}
+      <div>
+        {err}
+      </div>
+    {/each}
+  </slot>
 </p>
 
 <style>

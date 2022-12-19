@@ -1,9 +1,9 @@
 import { writable } from 'svelte-local-storage-store';
-import type { IPhonePrefix } from '$lib/interfaces';
+import type { IPhonePrefix, ICategory } from '$lib/interfaces';
 
 const $$user = {
   prefixes: <IPhonePrefix[]>[],
-  categories: <any[]>[],
+  categories: <ICategory[]>[],
   loading: false,
 }
 
@@ -21,7 +21,7 @@ const setPrefixes = (prefixes: IPhonePrefix[]): void => {
   }));
 };
 
-const setCategories = (categories: any[]): void => {
+const setCategories = (categories: ICategory[]): void => {
   update(value => ({
     ...value,
     categories,

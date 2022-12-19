@@ -58,11 +58,13 @@
   const getCodeRequestedAt = (): string|null => {
     return localStorage.getItem('code_requested_at');
   }
+
   const setCodeRequestedAt = (): number => {
     const timestamp = dayjs().unix();
     localStorage.setItem('code_requested_at', `${timestamp}`);
     return timestamp;
   }
+
   const removeCodeRequestedAt = (): void => {
     localStorage.removeItem('code_requested_at');
   }
@@ -74,16 +76,15 @@
     const codeRequestedAt = getCodeRequestedAt();
     if (codeRequestedAt) {
       const seconds = getPassedSecondsFromTS(parseInt(codeRequestedAt))
-      console.log(seconds)
       return (seconds > codeInput.timeout);
     }
     return true;
   }
 
   /**
-   * Request Sms Code
+   * Request valdiation code
    */
-  const requestSmsCode = async () => {
+  const requestValidationCode = async () => {
     form.loading = true;
     const isAvailable = checkIsRequestCodeAvailable();
     if (!isAvailable)
@@ -92,7 +93,7 @@
     try {
       await authApi.getCsrfCookie();
       const prefix = form.prefix.prefix;
-      await authApi.requestSmsCode(prefix, form.phone);
+      await authApi.requestValidationCode(prefix, form.phone);
 
       // Set next step, set verification code TS
       form.is_phone_valid = true;
@@ -117,7 +118,7 @@
     try {
       await authApi.getCsrfCookie();
       const prefix = form.prefix.prefix;
-      await authApi.validatePhone(prefix, form.phone, form.validation_code);
+      await authApi.verifyValidationCode(prefix, form.phone, form.validation_code);
 
       // Set next step, clean verification code TS
       form.is_phone_verified = true;
@@ -256,7 +257,7 @@
 
         <div class="text-center">
           {#if !codeInput.visible}
-            <div  class="pb-8 text-sm">
+            <div class="pb-8 text-sm">
               <ResendCodeCountdown
                 seconds={30}
                 class="font-semibold text-gray-500"
@@ -268,7 +269,7 @@
           <Button
             block
             disabled={!isPhoneValid || !codeInput.visible}
-            on:click={requestSmsCode}
+            on:click={requestValidationCode}
             variant={isPhoneValid ? 'primary' : 'default'}
           >
             {$_('actions.continue')}
@@ -292,7 +293,7 @@
         <div class="text-center">
           <div class="pb-8 text-sm">
             {#if codeInput.visible}
-              <button class="ms-link" on:click={requestSmsCode}>
+              <button class="ms-link" on:click={requestValidationCode}>
                 {$_('pages.signup.resend_code')}
               </button>
             {:else}
