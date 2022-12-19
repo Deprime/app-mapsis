@@ -10,17 +10,14 @@
 
   // Data
   let src = `${CDN_URL}/${photo.url}`
-  let alt = `poster-${photo.id}`
+  // let alt = `poster-${photo.id}`
 </script>
 
-<div class="gallery-item">
-  <div class="image-wrapper">
-    {#if photo.is_poster}
-      <span class="label-poster">
-        {$_('pages.editor.is_poster')}
-      </span>
-    {/if}
-    <img src={src} {alt} />
-    <div class="image-overlay"></div>
-  </div>
+<div class="gallery-item" style={`background-image: url(${src})`}>
+  {#if photo.is_poster}
+    <span class="label-poster">
+      {$_('pages.editor.is_poster')}
+    </span>
+  {/if}
+  <!-- <img src={src} {alt} /> -->
 </div>

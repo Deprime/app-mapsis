@@ -4,8 +4,8 @@
   import { goto } from '$app/navigation';
 
   import { ChevronLeftIcon } from 'svelte-feather-icons';
-	import { Input, CodeInput, Button, ValidationError } from '$lib/components/ui';
-  import { PhoneInput } from '$lib/components/shared';
+	import { CodeInput, Button, ValidationError } from '$lib/components/ui';
+  import { PhoneInput, PasswordControl } from '$lib/components/shared';
   import { Header } from '$lib/components/structure';
 
   // Services
@@ -15,7 +15,7 @@
   import { mapErrors, cleanErrors } from '$lib/helpers/errors';
 
   // Types
-  import type { IPhonePrefix, IValidationError } from '$lib/interfaces';
+  import type {  IValidationError } from '$lib/interfaces';
 
   // Data
   const codeInput = {
@@ -130,7 +130,6 @@
     }
   }
 
-
   /**
    * On validation code change
    */
@@ -163,91 +162,107 @@
   </Header>
 
   <section class="basis-5/12"></section>
-    <section class="basis-6/12 w-full flex flex-col px-4 space-y-4">
-      <h4 class="text-center">
-        {$_('pages.access_restore.title')}
-      </h4>
-
+  <section class="basis-6/12 w-full flex flex-col px-4 space-y-4">
+    {#if isStep1}
+      <header>
+        <h4 class="text-center">
+          {$_('pages.access_restore.title')}
+        </h4>
+      </header>
       <div class="space-y-2">
         <PhoneInput
           bind:phone={form.phone}
           bind:prefix={form.prefix}
           bind:isPhoneValid
-          disabled={!isStep1}
         />
 
         {#if errors.phone?.length > 0}
           <ValidationError errorList={errors.phone} />
         {/if}
       </div>
+    {/if}
 
-      {#if isStep2}
-        <div class="space-y-2">
-          <div class="flex justify-center w-full">
-            <CodeInput
-              inputCount={4}
-              bind:this={codeInput.ref}
-              on:change={onValidationCodeChange}
-            />
-          </div>
+    {#if isStep2}
+      <header class="text-center">
+        <h4>
+          {$_('pages.phone_validation.title')}
+        </h4>
+        <p class="text-sm">
+          {$_('pages.phone_validation.subtitle')}
+        </p>
+      </header>
 
-          {#if errors.code?.length > 0}
-            <ValidationError errorList={errors.code} />
-          {/if}
-        </div>
-      {/if}
-
-      {#if isStep3}
-        <div class="space-y-2">
-          <Input
-            placeholder={$_('pages.signup_email.your_password')}
-            class="w-full"
-            type="password"
-            bind:value={form.password}
+      <div class="space-y-2">
+        <div class="flex justify-center w-full">
+          <CodeInput
+            inputCount={4}
+            bind:this={codeInput.ref}
+            on:change={onValidationCodeChange}
           />
-
-          {#if errors.password?.length > 0}
-            <ValidationError errorList={errors.password} />
-          {/if}
         </div>
-      {/if}
-    </section>
 
-    <div class="basis-1/12 w-full px-4 pt-8 mb-12">
-      {#if isStep1}
-        <Button
-          variant="primary"
-          block
-          disabled={!isPhoneValid || form.loading}
-          loading={form.loading}
-          on:click={requestValidationCode}
-        >
-          {$_('actions.continue')}
-        </Button>
-      {/if}
+        {#if errors.code?.length > 0}
+          <ValidationError errorList={errors.code} />
+        {/if}
+      </div>
+    {/if}
 
-      {#if isStep2}
-        <Button
-          variant="primary"
-          block
-          disabled={!isCodeValid || form.loading}
-          loading={form.loading}
-          on:click={validatePhone}
-        >
-          {$_('actions.confirm')}
-        </Button>
-      {/if}
+    {#if isStep3}
+      <header class="text-center">
+        <h4>
+          {$_('pages.signup.create_password')}
+        </h4>
+      </header>
+      <div class="space-y-2 px-4">
+        <PasswordControl
+          bind:password={form.password}
+          on:validate={e => {
+            form.is_password_valid = e.detail;
+          }}
+        />
 
-      {#if isStep3}
-        <Button
-          variant="primary"
-          block
-          disabled={!isPasswordValid || form.loading}
-          loading={form.loading}
-          on:click={restorePassword}
-        >
-          {$_('actions.update_password')}
-        </Button>
-      {/if}
-    </div>
+        {#if errors.password?.length > 0}
+          <ValidationError errorList={errors.password} />
+        {/if}
+      </div>
+    {/if}
+  </section>
+
+  <div class="basis-1/12 w-full px-4 pt-8 mb-12">
+    {#if isStep1}
+      <Button
+        variant="primary"
+        block
+        disabled={!isPhoneValid || form.loading}
+        loading={form.loading}
+        on:click={requestValidationCode}
+      >
+        {$_('actions.continue')}
+      </Button>
+    {/if}
+
+    {#if isStep2}
+      <Button
+        variant="primary"
+        block
+        disabled={!isCodeValid || form.loading}
+        loading={form.loading}
+        on:click={validatePhone}
+      >
+        {$_('actions.confirm')}
+      </Button>
+    {/if}
+
+    {#if isStep3}
+      <Button
+        variant="primary"
+        block
+        disabled={!isPasswordValid || form.loading}
+        loading={form.loading}
+        on:click={restorePassword}
+      >
+        {$_('actions.update_password')}
+      </Button>
+    {/if}
+  </div>
 </div>

@@ -1,1 +1,177 @@
-
+{
+  "app": {
+    "intro": "A convenient marketplace with services and goods divided into categories"
+  },
+  "actions": {
+    "signin": "Signin",
+    "signup": "Signup",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "create": "Create",
+    "delete": "Delete",
+    "update": "Update",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "install": "Install",
+    "create_event": "Create event",
+    "create_post": "Create post",
+    "publicate": "Publicate",
+    "search": "Search",
+    "find_event": "Find event",
+    "add_photo": "Add picture",
+    "lets_go": "Let's go",
+    "logout": "Logout",
+    "logout_form_app": "Logout from app",
+    "show_on_map": "Show on map",
+    "select_value": "Select a value",
+    "update_password": "Update password"
+  },
+  "attrs": {
+    "not_required": "Not required",
+    "required": "Required"
+  },
+  "validation": {
+    "wrong_creditionals": "Wrong creditionals",
+    "phone_registred": "This phone number is already registered",
+    "trottling": "Too many request attempts"
+  },
+  "errors": {
+    "no_connection": {
+      "title": "Something went wrong",
+      "description": "Please check your internet connection"
+    }
+  },
+  "setup": {
+    "title": "Setup Mapsis",
+    "description": "Add Mapsis to your screen for full functionality and comfortable use"
+  },
+  "location": {
+    "detecting": "Trying to find your location",
+    "detected": "Your position has been successfully lcoated",
+    "not_detected": "We couldn't find your location",
+    "search_hint": "Enter the address on the map or using the search",
+    "detect_address": "Locate an address"
+  },
+  "password_requirements": {
+    "upper_lower": "The password must contain uppercase and lowercase letters of the Latin alphabet",
+    "digits": "The password must contain numbers",
+    "length": "Password length is at least 6 characters"
+  },
+  "pages": {
+    "policy": {
+      "footer": "By creating an account, you agree to our <a href='{terms_url}'>Terms of Service</a>. More about the use of personal data in the Privacy Policy<a href='{privacy_url}'>Privacy Policy</a>."
+    },
+    "terms": {
+      "title": "Terms of Service"
+    },
+    "privacy": {
+      "title": "Privacy Policy"
+    },
+    "partnership": {
+      "title": "Affiliate program"
+    },
+    "signup": {
+      "title": "Registration by phone number",
+      "enter_phone": "Enter your phone number",
+      "enter_password": "Enter the password"
+    },
+    "phone_validation": {
+      "title": "You are about to receive a call",
+      "subtitle": "Enter the last 4 digits of the phone number",
+      "resend_timeout": "Repeat call after <span>{seconds}</span> seconds",
+      "enter_sms_code": "Enter the code from the SMS",
+      "resend_code": "Call me back",
+      "get_code": "Get the code"
+    },
+    "signup_email": {
+      "title": "Registration by email",
+      "enter_email": "Enter the email address",
+      "your_email": "Your email",
+      "your_password": "Your password"
+    },
+    "signin": {
+      "title": "Signin",
+      "cant_signin": "Can't log in?"
+    },
+    "access_restore": {
+      "title": "Restoring access"
+    },
+    "im": {
+      "nav_title": "Messenger",
+      "title": "Messenger",
+      "chats": "Chats",
+      "message": "Message"
+    },
+    "posts": {
+      "nav_title": "Posts",
+      "title": "Posts"
+    },
+    "my_posts": {
+      "nav_title": "Posts",
+      "title": "My posts"
+    },
+    "editor": {
+      "title": "Post editor",
+      "new": "New post",
+      "post_category": "Select a category",
+      "post_title": "post title",
+      "post_description": "Description",
+      "post_address": "Address",
+      "post_price": "Price",
+      "post_info": "Main info",
+      "post_info_hint": "Fill main info",
+      "post_photos": "Add a picture",
+      "is_poster": "Poster"
+    },
+    "search": {
+      "nav_title": "Search",
+      "title": "Search"
+    },
+    "map": {
+      "nav_title": "Map",
+      "title": "Event map"
+    },
+    "event": {
+      "nav_title": "Events",
+      "title": "Events",
+      "to_posting": "Go to posting",
+      "settings": "Post settings"
+    },
+    "profile": {
+      "nav_title": "Profile",
+      "title": "Profile",
+      "user_data": "Personal data",
+      "contact_data": "Contact details",
+      "whats_your_name": "Hi! What's your name?",
+      "enter_name": "Enter your name",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "phone": "Phone",
+      "instagram": "Instagram",
+      "whatsapp": "Whatsapp",
+      "telegram": "Telegram"
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "delete_account": "Delete account"
+    },
+    "filters": {
+      "title": "Fiters",
+      "category": "Category",
+      "all_categories": "All categories",
+      "event_date": "Event date",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "after_week": "After week",
+      "time_start": "Start time",
+      "start": "Start",
+      "end": "End",
+      "address": "Address",
+      "reset": "Reset filters",
+      "show_events": "Show {count} events"
+    }
+  }
+}

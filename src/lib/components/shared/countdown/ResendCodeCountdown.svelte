@@ -33,7 +33,7 @@
 </script>
 
 <div class={`countdown ${$$props.class || ""}`}>
-  {@html $_('pages.signup.resend_timeout', {values: {seconds}})}
+  {@html $_('pages.phone_validation.resend_timeout', {values: {seconds}})}
 </div>
 
 <style scoped lang="scss">

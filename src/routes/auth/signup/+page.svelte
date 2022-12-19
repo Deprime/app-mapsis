@@ -294,7 +294,7 @@
           <div class="pb-8 text-sm">
             {#if codeInput.visible}
               <button class="ms-link" on:click={requestValidationCode}>
-                {$_('pages.signup.resend_code')}
+                {$_('pages.phone_validation.resend_code')}
               </button>
             {:else}
               <ResendCodeCountdown

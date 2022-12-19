@@ -7,6 +7,7 @@
   @apply rounded-lg bg-white;
   @apply py-6 h-[140px] overflow-y-hidden;
   @apply relative;
+  @apply bg-contain bg-no-repeat bg-center;
 
   .gallery-item--icon {
     @apply rounded-full p-1 mb-4;
@@ -16,22 +17,9 @@
     @apply text-sm text-gray-500 font-semibold;
   }
 
-  .image-wrapper,
-  .image-overlay,
-  img {
-    @apply rounded-lg;
-  }
-
-  .image-wrapper {
-    .label-poster {
-      @apply absolute z-[1] top-1 left-1;
-      @apply px-1.5 py-0.5 rounded-md;
-      @apply text-xs text-white bg-slate-900/70;
-    }
-  }
-
-  .image-overlay {
-    @apply absolute inset-0;
-    @apply z-[2];
+  .label-poster {
+    @apply absolute z-[1] top-1 left-1;
+    @apply px-1.5 py-0.5 rounded-md;
+    @apply text-xs text-white bg-slate-900/70;
   }
 }

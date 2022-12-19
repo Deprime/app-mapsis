@@ -74,9 +74,14 @@
     "signup": {
       "title": "Регистрация по номеру телефона",
       "enter_phone": "Укажите номер телефона",
-      "enter_sms_code": "Введите код из СМС",
       "enter_password": "Введите пароль",
+      "create_password": "Создайте пароль"
+    },
+    "phone_validation": {
+      "title": "Сейчас вам поступит звонок",
+      "subtitle": "Введите последние 4 цифры номера телефона",
       "resend_timeout": "Повторный звонок через <span>{seconds}</span> сек",
+      "enter_sms_code": "Введите код из СМС",
       "resend_code": "Перезвоните мне",
       "get_code": "Получить код"
     },

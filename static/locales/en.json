@@ -74,9 +74,14 @@
     "signup": {
       "title": "Registration by phone number",
       "enter_phone": "Enter your phone number",
-      "enter_sms_code": "Enter the code from the SMS",
       "enter_password": "Enter the password",
+      "create_password": "Create the password"
+    },
+    "phone_validation": {
+      "title": "You are about to receive a call",
+      "subtitle": "Enter the last 4 digits of the phone number",
       "resend_timeout": "Repeat call after <span>{seconds}</span> seconds",
+      "enter_sms_code": "Enter the code from the SMS",
       "resend_code": "Call me back",
       "get_code": "Get the code"
     },

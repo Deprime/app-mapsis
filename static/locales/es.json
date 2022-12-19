@@ -1,20 +1,19 @@
-
 {
   "app": {
-    "intro": "Un mercado conveniente con servicios y bienes divididos en categorías"
+    "intro": "A convenient marketplace with services and goods divided into categories"
   },
   "actions": {
-    "signin": "Iniciar sesión",
-    "signup": "Registrarse",
-    "continue": "Continuar",
-    "confirm": "Confirmar",
-    "create": "Crear",
-    "delete": "Eliminar",
-    "update": "Actualizar",
+    "signin": "Signin",
+    "signup": "Signup",
+    "continue": "Continue",
+    "confirm": "Confirm",
+    "create": "Create",
+    "delete": "Delete",
+    "update": "Update",
     "edit": "Edit",
     "save": "Save",
-    "cancel": "Cancelar",
-    "install": "Instalar",
+    "cancel": "Cancel",
+    "install": "Install",
     "create_event": "Create event",
     "create_post": "Create post",
     "publicate": "Publicate",
@@ -70,14 +69,18 @@
       "title": "Privacy Policy"
     },
     "partnership": {
-      "title": "Programa de afiliados"
+      "title": "Affiliate program"
     },
     "signup": {
       "title": "Registration by phone number",
       "enter_phone": "Enter your phone number",
-      "enter_sms_code": "Enter the code from the SMS",
-      "enter_password": "Enter the password",
+      "enter_password": "Enter the password"
+    },
+    "phone_validation": {
+      "title": "You are about to receive a call",
+      "subtitle": "Enter the last 4 digits of the phone number",
       "resend_timeout": "Repeat call after <span>{seconds}</span> seconds",
+      "enter_sms_code": "Enter the code from the SMS",
       "resend_code": "Call me back",
       "get_code": "Get the code"
     },
@@ -139,6 +142,7 @@
       "nav_title": "Profile",
       "title": "Profile",
       "user_data": "Personal data",
+      "contact_data": "Contact details",
       "whats_your_name": "Hi! What's your name?",
       "enter_name": "Enter your name",
       "name": "Name",

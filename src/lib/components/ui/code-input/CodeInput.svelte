@@ -75,7 +75,7 @@
       type="tel"
       min="0"
       max="9"
-      class="w-12 mx-2 text-center"
+      class="w-12 mx-2 text-center py-6"
       tabindex={item.tabindex}
       inputmode="numeric"
       autocomplete="one-time-code"
