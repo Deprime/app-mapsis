@@ -98,6 +98,9 @@
     "access_restore": {
       "title": "Restoring access"
     },
+    "categories": {
+      "title": "Categories"
+    },
     "im": {
       "nav_title": "Messenger",
       "title": "Messenger",

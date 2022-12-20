@@ -1,4 +1,5 @@
 export const DEFAULT_LOCALE = 'en';
+export const LOCALE_FILE_URL = `/locales/{locale}.json`;
 
 export const LANGUAGE_LIST = [
   {

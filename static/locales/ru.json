@@ -98,6 +98,9 @@
     "access_restore": {
       "title": "Восстановление доступа"
     },
+    "categories": {
+      "title": "Категории"
+    },
     "im": {
       "nav_title": "Мессенджер",
       "title": "Мессенджер",

@@ -9,9 +9,9 @@ const i18nService = {
    */
   setupLocale: async (selectedLocale: string): Promise<any> => {
     const locales  = LANGUAGE_LIST.map(item => item.locale);
-    const $$locale = (locales.includes(selectedLocale)) ?  selectedLocale : DEFAULT_LOCALE;
+    const $$locale = locales.includes(selectedLocale) ?  selectedLocale : DEFAULT_LOCALE;
 
-    setupI18n({ withLocale: $$locale });
+    await setupI18n({ withLocale: $$locale });
     document.dir = get(dir);
     appStore.setLocale($$locale);
   }
