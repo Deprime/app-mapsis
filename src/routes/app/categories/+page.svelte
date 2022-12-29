@@ -79,9 +79,10 @@
       />
     </header>
 
-    <h2>
+    <h2 class="py-4 mx-4">
       {$_('pages.categories.title')}
     </h2>
+
     <div class="category-list">
       {#each $dictionaryStore.categories as category}
         <div class="category-item">
