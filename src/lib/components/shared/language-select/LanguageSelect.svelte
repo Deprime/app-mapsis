@@ -46,7 +46,7 @@
   on:cancel={closeMenu}
 >
   <span slot="prefix">
-    <img src={LocaleSelector} class="-ml-1 -my-1 w-6 h-6">
+    <img src={LocaleSelector} alt="locale selector" class="-ml-1 -my-1 w-6 h-6">
   </span>
 
   {#each LANGUAGE_LIST as lang, index}

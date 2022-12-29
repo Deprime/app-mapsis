@@ -14,7 +14,7 @@
   // Props
   export let disabled = false;
   export let loading  = false;
-  export let block    = false;
+  export let block    = true;
   export let variant: "default"|"primary" = "default"
   export let size     = "";
 

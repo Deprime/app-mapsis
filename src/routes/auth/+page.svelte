@@ -44,10 +44,10 @@
     </div>
 
     <footer class="space-y-4 w-full mb-12">
-      <Button block variant="primary" on:click={gotoSignIn}>
+      <Button variant="primary" on:click={gotoSignIn}>
         {$_('actions.signin', {default: "Sign in"})}
       </Button>
-      <Button block on:click={gotoSignUp}>
+      <Button on:click={gotoSignUp}>
         {$_('actions.signup', {default: "Sign up"})}
       </Button>
     </footer>

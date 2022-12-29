@@ -43,11 +43,6 @@
    * Show exit modal
    */
   const showLogoutModal = (): void => {
-    if (!logoutActive) {
-      logoutActive = true;
-      return;
-    }
-
     logoutModal.visible = true;
   }
 
@@ -161,7 +156,6 @@
 
     <button
       class="button-logout"
-      class:active={logoutActive}
       on:click={showLogoutModal}
     >
       {$_('actions.logout_form_app')}
@@ -215,10 +209,6 @@
   @apply bg-white;
   @apply rounded-xl;
   @apply text-sm text-gray-600 font-semibold;
-  @apply opacity-60;
-  &.active {
-    @apply opacity-100;
-  }
 }
 
 .button-settings {

@@ -85,12 +85,14 @@
    * Request valdiation code
    */
   const requestValidationCode = async () => {
-    form.loading = true;
+
     const isAvailable = checkIsRequestCodeAvailable();
     if (!isAvailable)
       return;
 
     try {
+      form.loading = true;
+
       await authApi.getCsrfCookie();
       const prefix = form.prefix.prefix;
       await authApi.requestValidationCode(prefix, form.phone);
@@ -137,7 +139,11 @@
   /**
    * Signup phone
    */
-  const signup = async () => {
+  const signup = async (): Promise<any> => {
+    if (!form.is_password_valid) {
+      return;
+    }
+
     form.loading = true;
     try {
       await authApi.getCsrfCookie();
@@ -180,6 +186,7 @@
    */
   const onValidationCodeChange = (e: CustomEvent) => {
     form.validation_code = e.detail;
+    console.log(form.validation_code)
   }
 
   /**
@@ -217,7 +224,10 @@
     </div>
 
     {#if isStep1}
-      <section class="px-4 space-y-6">
+      <form
+        class="px-4 space-y-6"
+        on:submit|preventDefault={requestValidationCode}
+      >
         <div>
           <div class="flex flex-row pb-2">
             <Select
@@ -238,6 +248,7 @@
               placeholder={phonePlaceholder}
               inputmode="numeric"
               required
+              disabled={form.loading}
               on:input={e => onPhoneInput(e)}
               bind:value={form.phone}
             />
@@ -256,30 +267,22 @@
         </div>
 
         <div class="text-center">
-          {#if !codeInput.visible}
-            <div class="pb-8 text-sm">
-              <ResendCodeCountdown
-                seconds={30}
-                class="font-semibold text-gray-500"
-                on:completed={() => codeInput.visible = true}
-              />
-            </div>
-          {/if}
-
           <Button
-            block
-            disabled={!isPhoneValid || !codeInput.visible}
-            on:click={requestValidationCode}
+            disabled={!isPhoneValid}
+            loading={form.loading}
             variant={isPhoneValid ? 'primary' : 'default'}
           >
             {$_('actions.continue')}
           </Button>
         </div>
-      </section>
+      </form>
     {/if}
 
     {#if isStep2}
-      <section class="px-4 space-y-8">
+      <form
+        class="px-4 space-y-8"
+        on:submit|preventDefault={validatePhone}
+      >
         <div class="flex flex-row px-6">
           <div class="flex justify-center w-full">
             <CodeInput
@@ -306,19 +309,21 @@
           </div>
 
           <Button
-            block
             disabled={!isCodeValid}
+            loading={form.loading}
             variant='primary'
-            on:click={validatePhone}
           >
             {$_('actions.continue')}
           </Button>
         </div>
-      </section>
+      </form>
     {/if}
 
     {#if isStep3}
-      <section class="px-4 space-y-6">
+      <form
+        class="px-4 space-y-6"
+        on:submit|preventDefault={signup}
+      >
         <div>
           <PasswordControl
             bind:password={form.password}
@@ -329,15 +334,14 @@
         </div>
         <div>
           <Button
-            block
             disabled={!form.is_password_valid}
+            loading={form.loading}
             variant={form.is_password_valid ? 'primary' : 'default'}
-            on:click={signup}
           >
             {$_('actions.signup')}
           </Button>
         </div>
-      </section>
+      </form>
     {/if}
   </section>
 

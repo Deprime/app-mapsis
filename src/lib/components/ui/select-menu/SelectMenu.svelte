@@ -55,7 +55,8 @@
   }
 </script>
 
-<button on:click={openMenu} {disabled}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<span on:click={openMenu} class="inline-block">
   <slot name="button">
     <div
       class="select-button"
@@ -74,7 +75,7 @@
       </slot>
     </div>
   </slot>
-</button>
+</span>
 
 {#if visible}
   <div class="select-menu-wrapper" transition:fade={fadeOption}>

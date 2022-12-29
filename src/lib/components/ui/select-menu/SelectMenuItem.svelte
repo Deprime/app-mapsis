@@ -12,11 +12,11 @@
   const events = getEventsAction(current_component);
 </script>
 
-<button
+<div
   use:events
   class:select-menu-item--disabled={disabled}
   class:select-menu-item--selected={selected}
   class={`select-menu-item ${$$props.class || ""}`}
 >
   <slot />
-</button>
+</div>

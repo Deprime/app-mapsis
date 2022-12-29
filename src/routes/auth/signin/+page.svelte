@@ -74,54 +74,57 @@
 	<title>Home</title>
 </svelte:head>
 
-<div class="page ms-h-screen flex flex-col justify-between items-end content-center">
+<div class="page ms-h-screen flex flex-col">
   <Header>
     <a href="/auth">
       <ChevronLeftIcon />
     </a>
   </Header>
 
-  <section class="basis-5/12"></section>
-  <section class="basis-6/12 w-full flex flex-col px-4 space-y-4">
-    <h4 class="text-center">
-      {$_('pages.signin.title')}
-    </h4>
+  <form
+    class="basis-full flex flex-col justify-between items-end content-center"
+    on:submit|preventDefault={onSignin}
+  >
+    <section class="basis-5/12"></section>
+    <section class="basis-6/12 w-full flex flex-col px-4 space-y-4">
+      <h4 class="text-center">
+        {$_('pages.signin.title')}
+      </h4>
 
-    <PhoneInput
-      bind:phone={form.phone}
-      bind:prefix={form.prefix}
-      bind:isPhoneValid
-    />
-
-    <div class="space-y-2">
-      <Input
-        placeholder={$_('pages.signup_email.your_password')}
-        class="w-full"
-        type="password"
-        bind:value={form.password}
+      <PhoneInput
+        bind:phone={form.phone}
+        bind:prefix={form.prefix}
+        bind:isPhoneValid
       />
 
-      {#if form.errors?.error}
-        <ValidationError>
-          {$_('validation.wrong_creditionals')}
-        </ValidationError>
-      {/if}
+      <div class="space-y-2">
+        <Input
+          placeholder={$_('pages.signup_email.your_password')}
+          class="w-full"
+          type="password"
+          bind:value={form.password}
+        />
+
+        {#if form.errors?.error}
+          <ValidationError>
+            {$_('validation.wrong_creditionals')}
+          </ValidationError>
+        {/if}
+      </div>
+
+      <a href="/auth/forgot-password" class="text-sm mx-1">
+        {$_('pages.signin.cant_signin')}
+      </a>
+    </section>
+
+    <div class="basis-1/12 w-full px-4 pt-8 mb-12">
+      <Button
+        variant="primary"
+        disabled={!isPhoneValid || form.password.length < 6 || form.loading}
+        loading={form.loading}
+      >
+        {$_('actions.continue')}
+      </Button>
     </div>
-
-    <a href="/auth/forgot-password" class="text-sm mx-1">
-      {$_('pages.signin.cant_signin')}
-    </a>
-  </section>
-
-  <div class="basis-1/12 w-full px-4 pt-8 mb-12">
-    <Button
-      variant="primary"
-      block
-      disabled={!isPhoneValid || form.password.length < 6 || form.loading}
-      loading={form.loading}
-      on:click={onSignin}
-    >
-      {$_('actions.continue')}
-    </Button>
-  </div>
+  </form>
 </div>

@@ -61,7 +61,8 @@
       bind:value={password}
     />
 
-    <button
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <span
       class="absolute top-2.5 right-3 text-slate-700"
       on:click={() => { visible = !visible; }}
     >
@@ -70,7 +71,7 @@
       {:else}
         <EyeIcon />
       {/if}
-    </button>
+    </span>
   </div>
 
   <div class="requirements">
