@@ -1,4 +1,4 @@
-import { writable } from 'svelte-local-storage-store';
+import { persisted  } from 'svelte-local-storage-store';
 import { LATLNG_UBUD, DEFAULT_ZOOM } from '$lib/constants/map';
 
 import type { LatLng, LatLngBounds } from '$lib/types/coords';
@@ -13,7 +13,7 @@ const $$map: IMapStore = {
   loading: false,
 }
 
-const { subscribe, set, update } = writable('map', $$map);
+const { subscribe, set, update } = persisted ('map', $$map);
 const clear = () => set($$map);
 
 /**

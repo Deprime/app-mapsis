@@ -1,0 +1,17 @@
+.bg-gradient {
+  &-orange {
+    background: linear-gradient(93.87deg, #FF5F6D -10.04%, #FFC371 103.84%);
+  }
+  &-blue {
+    background: linear-gradient(116.57deg, #00C6FF 5.8%, #0072FF 89.18%);
+  }
+  &-purple {
+    background: linear-gradient(180deg, #B84B98 0%, #6649D5 100%);
+  }
+  &-teal {
+    background: linear-gradient(104.69deg, #C2E59C 2.29%, #64B3F4 90.78%);
+  }
+  &-violet {
+    background: linear-gradient(124.22deg, #FC5C7D 7.91%, #6A82FB 85.63%);
+  }
+}

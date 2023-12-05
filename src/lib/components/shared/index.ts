@@ -3,6 +3,7 @@ export { default as PhoneInput }        from "./phone-input/PhoneInput.svelte";
 export { default as A2hsModal }         from "./a2hs-modal/A2hsModal.svelte";
 export { default as Countdown }         from "./countdown/Countdown.svelte";
 export { default as ResendCodeCountdown } from "./countdown/ResendCodeCountdown.svelte";
+export { default as Logo }              from "./logo/Logo.svelte";
 
 export { default as MapLayer }          from "./map-layer/MapLayer.svelte";
 export { default as MapPointSelector }  from "./map-point-selector/MapPointSelector.svelte";

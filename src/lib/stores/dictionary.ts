@@ -1,4 +1,4 @@
-import { writable } from 'svelte-local-storage-store';
+import { persisted  } from 'svelte-local-storage-store';
 import type { IPhonePrefix, ICategory } from '$lib/interfaces';
 
 const $$user = {
@@ -7,7 +7,7 @@ const $$user = {
   loading: false,
 }
 
-const { subscribe, set, update } = writable('dictionary', $$user);
+const { subscribe, set, update } = persisted ('dictionary', $$user);
 const clear = () => set($$user);
 
 const setLoading = (state: boolean): void => {

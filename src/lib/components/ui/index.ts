@@ -1,5 +1,6 @@
 export { default as Avatar }          from "./avatar/Avatar.svelte";
 export { default as Button }          from "./button/Button.svelte";
+export { default as XButton }          from "./x-button/XButton.svelte";
 export { default as Input }           from "./input/Input.svelte";
 export { default as CodeInput }       from "./code-input/CodeInput.svelte";
 export { default as Textarea }        from "./textarea/Textarea.svelte";

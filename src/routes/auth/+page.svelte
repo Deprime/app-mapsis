@@ -1,21 +1,17 @@
 <script lang="ts">
-  import Logo from '$lib/assets/images/logo.svg';
-
-  import { goto } from '$app/navigation';
   import { _ } from '$lib/config/i18n';
 
-  import { Button, SelectMenu } from '$lib/components/ui';
-  import { LanguageSelect } from '$lib/components/shared';
+  // Components
+  import { Button } from '$lib/components/ui';
+  import { LanguageSelect, Logo } from '$lib/components/shared';
+  import { SigninSection } from '$lib/components/structure';
 
-  const APP_NAME = import.meta.env.VITE_APP_NAME;
+  // Data
+  let showSignin = false;
 
   // Methods
-  const gotoSignIn = () => {
-    goto('/auth/signin');
-  }
-
-  const gotoSignUp = () => {
-    goto('/auth/signup');
+  const onSigninClick = () => {
+    showSignin = true;
   }
 </script>
 
@@ -23,33 +19,29 @@
 	<title>Authentication</title>
 </svelte:head>
 
-<div class="page ms-h-screen flex flex-col justify-between px-4">
-  <div class="basis-6/12 text-center">
+<div class="page ms-h-screen flex flex-col justify-end --justify-between px-4">
+  <div class="basis-6/12 text-center hidden">
     <p class="text-sm font-semibold mt-10">
       {$_('pages.partnership.title')}
     </p>
   </div>
 
   <div class="basis-6/12 flex flex-col justify-between">
-    <div class="text-center">
-      <figure class="mb-6">
-        <img src={Logo} alt={APP_NAME} class="my-0 mx-auto"/>
-      </figure>
-      <p class="text-sm font-semibold mb-8">
+    <div class="flex flex-col gap-y-6 items-center">
+      <Logo />
+      <p class="text-center text-sm font-semibold">
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html $_('app.intro')}
       </p>
-      <div>
-        <LanguageSelect  />
-      </div>
+      <LanguageSelect  />
     </div>
 
-    <footer class="space-y-4 w-full mb-12">
-      <Button variant="primary" on:click={gotoSignIn}>
-        {$_('actions.signin', {default: "Sign in"})}
-      </Button>
-      <Button on:click={gotoSignUp}>
-        {$_('actions.signup', {default: "Sign up"})}
+    <footer class="mb-12">
+      <Button variant="primary" on:click={onSigninClick}>
+        {$_('actions.signin')}
       </Button>
     </footer>
   </div>
+
+  <SigninSection bind:show={showSignin} />
 </div>

@@ -1,4 +1,4 @@
-import { writable } from 'svelte-local-storage-store';
+import { persisted  } from 'svelte-local-storage-store';
 import { DEFAULT_LOCALE } from '$lib/constants/languages';
 
 const $$app = {
@@ -8,7 +8,7 @@ const $$app = {
   loading: false,
 }
 
-const { subscribe, set, update } = writable('app', $$app);
+const { subscribe, set, update } = persisted ('app', $$app);
 const clear = () => set($$app);
 
 const setLoading = (state: boolean): void => {
