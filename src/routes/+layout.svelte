@@ -63,8 +63,11 @@
 </script>
 
 <!-- <svelte:window on:resize={onResize} /> -->
-<div class="app-wrapper relative ms-h-screen" style={`--mobile-screen: ${screenHeight};`}>
-  <main class="app-body">
+<div
+  class="app-wrapper relative ms-h-screen"
+  style={`--mobile-screen: ${screenHeight};`}
+>
+  <main class="app-body max-w-2xl mx-auto">
     {#if $isLocaleLoaded && !loading}
       {#if errors}
         <ErrorNoConnection />
