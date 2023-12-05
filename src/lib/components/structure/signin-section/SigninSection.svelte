@@ -1,6 +1,6 @@
 <script lang="ts">
   import Modal from "$lib/components/ui/modal/Modal.svelte";
-  import Logo from "$lib/components/shared/Logo/Logo.svelte";
+  import Logo from "$lib/components/shared/logo/Logo.svelte";
   import Button from "$lib/components/ui/button/Button.svelte";
 	import XButton from "$lib/components/ui/x-button/XButton.svelte";
   import IconGoogle from "$lib/components/icons/IconGoogle.svelte";
